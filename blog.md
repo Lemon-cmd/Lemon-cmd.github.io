@@ -4,6 +4,11 @@ title:
 permalink: /blog/
 ---
 
+<br>
+<br>
+
+## Blog Posts
+
 ### Research
 <ul>
   {% for post in site.posts %}

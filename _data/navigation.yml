@@ -1,0 +1,19 @@
+main:
+- title: "Blog"
+  url: blog/
+
+- title: "Home"
+  url: ./
+
+#  - title: "Teaching"
+#    url: teaching/
+#    right: true 
+
+#  - title: "Services"
+#    url: services/
+
+#  - title: "Talks"
+#    url: talks/
+
+#  - title: "Publications"
+#    url: publications/

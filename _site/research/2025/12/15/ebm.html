@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+    <title>Energy-based Modeling | Bao Pham</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="Bao Pham">
+    <meta name="keywords" content="bao pham, pham bao, baopham, phambao">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css"
+        integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/pub.css">
+    <link rel="stylesheet" href="/assets/css/nav.css">
+
+    <script src="/assets/js/github-stars.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.js"></script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myLinks");
+            if (x.style.display === "inline") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "inline";
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="topnav">
+        <div id="myLinks">
+            
+    <a class="normal" href="/blog/">Blog</a>
+
+    <a class="normal" href="/">Home</a>
+
+
+
+        </div>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+
+    <div class="wrapper">
+
+        <section style="width: 100%; float: none; max-width: 800px; margin: 0 auto; padding-top: 60px;">
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <a href="/blog/" style="font-size: 1.2rem; color: #828282; text-decoration: none;">&larr; Back to
+                    Blog</a>
+
+                
+            </div>
+
+            <h1>Energy-based Modeling</h1>
+            <p style="color: #828282; font-family: 'Ubuntu Mono', monospace; font-size: 0.9rem;">
+                December 15, 2025
+            </p>
+            <hr>
+
+            <div style="text-align: justify;">
+                <h2 id="introduction">Introduction</h2>
+<p>At the heart of modern machine learning lies the goal of modeling a target unknown data distribution \(p_\text{data}\), which is typically done through <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation">maximum likelihood estimation</a>. When \(\textit{tractable}\), this principle approach provides a robust and statistically sound framework for learning probabilistic models. Yet in practice, approximating the likelihood of the complex and high-dimensional data presents great challenges. Although some probabilistic models can preserve likelihood tractability through strong assumptions, such constraints can however limit their expressiveness.</p>
+
+<h2 id="energy-and-likelihood">Energy and Likelihood</h2>
+<p>This tension between tractability and expressiveness consequently led to great interests in Energy-based Models (<a href="https://en.wikipedia.org/wiki/Energy-based_model">EBMs</a>), as they avoid the requirement of learning a normalized probability density in favor of directly learning an energy function which plays a role in determining the likelihood of the data:</p>
+
+\[p_\theta(x) = \frac{\exp(-E_\theta(x))}{Z_\theta}\]
+
+<p>where \(Z_\theta = \int \exp (-E_\theta(x)) \mathrm{d}x\) is the partition function marginalized over \(x\) and \(\theta\) is a set of learnable parameters.</p>
+
+<figure style="text-align: center;">
+  <img src="/assets/img/post_imgs/energy_likelihood_relationship.png" alt="My Image" width="600" />
+  <figcaption style="color: #828282; font-style: italic; margin-top: 8px; font-size: 0.9rem;">
+    Figure 1: An illustration of the relationship between energy and probability. When the energy of a state is low, its probability is instead high (see the location indicated gray arrow).
+  </figcaption>
+</figure>
+
+<p>The goal of learning \(E_\theta (x) : \mathbb{R}^{N} \rightarrow \mathbb{R}\) such that \(p_\theta (x) \approx p_\text{data} (x)\) enables greater flexibility, since EBMs in principle can be defined with any differentiable architecture and trained using gradient-based methods, allowing them to model complex and high dimensional data while avoiding strong constraints, e.g., requiring the model to produce probabilities via \(\texttt{softmax}\).</p>
+
+<p>Despite the phrase <em>EBMs</em> makes these models seem niche, it turns out that a variant of them, <a href="https://arxiv.org/abs/1503.03585">diffusion models</a>, has been setting the state-of-the-art performances across a variety of domains and is commonly used in image and video generations. In much recent times, such models are also experiencing a strong burgeoning interest in <a href="https://arxiv.org/abs/2508.15487">language modeling</a>. Although I am biased, due to the fact that I work in this domain, I think EBMs will definitely replace the typical Autoregressive models when it comes to language modeling in the near future (but I will not be making my arguments here).</p>
+
+<h2 id="how-to-learn-the-energy">How to Learn the Energy?</h2>
+<p>In the typical setup of learning a model \(p_\theta(x) \in [0, 1]^{K}\) where \(\sum_{i}^K p^{(i)}_\theta(x) = 1\), we heavily rely on the minimization of the negative likelihood to learn \(\theta\):</p>
+
+\[\mathcal{L}(\theta) = - \mathbb{E}_{x \sim p_\text{data}} \big [ \log p_\theta(x) \big ]\]
+
+<p>which is typically accomplished by minimizing the function <a href="https://en.wikipedia.org/wiki/Cross-entropy">Cross-Entropy</a>. This means that we would like to <strong>constraint our model</strong> to produce <ins>a set of \(K\) logits</ins> which we will then convert to <ins>a set of probabilities</ins> via the \(\texttt{softmax}\) function. However, as stated above, there is an alternative way to accomplish \(p_\theta (x) \approx p_\text{data} (x)\) without constraining our model to producing a set of probabilities or $K$ logits.</p>
+
+<p>Specifically, minimizing the negative likelihood of the data is equivalent to minimizing the KL divergence between \(p_\text{data}(x)\) and \(p_\theta(x)\):</p>
+
+\[-\mathbb{E}_{x \sim p_\text{data}(x)} \big [ \log p_\theta (x) \big ] = \mathrm{D}_{KL} \big ( p_\text{data}(x) \, || \, p_\theta (x) \big ) - \mathbb{E}_{x \sim p_\text{data}(x)} \big [ \log p_\text{data} (x) \big ],
+    \label{eqn:mle-dkl-data-model}\]
+
+<p>where \(\mathbb{E}_{x \sim p_\text{data}(x)} \big [ \log p_\text{data} (x) \big ]\) is a constant that does not depend on \(\theta\). As a result, we can estimate the gradient of the log-likelihood:</p>
+
+\[\nabla_\theta \log p_\theta (x) = - \nabla_\theta E_\theta(x) - \nabla_\theta \log Z_\theta.\]
+
+<p>Since \(Z_\theta\) is technically intractable, taking the gradient \(\nabla_\theta \log Z_\theta\) with respect to \(\theta\) enables us to estimate it without worrying about the dependency on \(x\). We can express the second gradient term as the following:</p>
+
+\[\begin{align}
+    \nabla_\theta \log Z_\theta &amp; = \nabla_\theta \log \int \exp \big ( -E_\theta(x) \big ) \mathrm{d} x \\ 
+    &amp; = \bigg ( \int \exp \big (-E_\theta (x) \big ) \mathrm{d} x \bigg )^{-1} \bigg ( \nabla_\theta \int \exp \big ( -E_\theta (x) \big ) \mathrm{d} x \bigg ) \\ 
+    &amp; =  \bigg ( \int \exp \big (-E_\theta (x) \big ) \mathrm{d} x \bigg )^{-1}   \int \nabla_\theta \exp \big ( -E_\theta (x) \big ) \mathrm{d} x  \\ 
+    &amp; = \int \bigg ( \int \exp \big (-E_\theta (x) \big ) \mathrm{d} x \bigg )^{-1}  \exp \big ( -E_\theta (x) \big ) \big ( - \nabla_\theta E_\theta (x) \big ) \mathrm{d} x \\ 
+    &amp; = \int p_\theta (x) \big ( - \nabla_\theta E_\theta (x) \big ) \big ) \mathrm{d}x \\ 
+    &amp; = \mathbb{E}_{x \sim p_\theta (x)} \big [ - \nabla_\theta E_\theta (x) \big ],
+    \label{eqn:MCMC-expectation}
+\end{align}\]
+
+<p>To estimate \(\nabla_\theta \log Z_\theta\), we can obtain an unbiased sample \(x'\) from sampling approaches, such as <a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Monte Carlo Markov Chain</a> (MCMC) techniques, by drawing from our <em>evolving distribution</em> \(p_\theta (x)\):</p>
+
+\[\nabla_\theta \log Z_\theta \simeq -\nabla_\theta E_\theta (x').\]
+
+<p>With an efficient MCMC method like <a href="https://en.wikipedia.org/wiki/Langevin_dynamics">Langevin dynamics</a>, we can easily make use of the <em>score function</em> to draw from \(p_\theta (x)\):</p>
+
+\[\begin{align}
+    \nabla_x \log p_\theta(x) &amp;= - \nabla_x E_\theta (x) - 
+    \underset{ = ~ 0}{\underbrace{\nabla_x \log Z_\theta}}  \\ 
+    &amp; = - \nabla_x E_\theta (x), 
+\end{align}\]
+
+<p>since the term \(\nabla_x \log Z_\theta\) does not depend on \(x\).</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Altogether, the objective (I presented here) is commonly known as <a href="https://www.cs.toronto.edu/~fritz/absps/cdmiguel.pdf">Contrastive Divergence</a>, the objective originally utilized to train <a href="https://en.wikipedia.org/wiki/Boltzmann_machine">Boltzmann Machines</a>:</p>
+
+\[\mathcal{L}_{CD}(\theta) = E_\theta(x) - E_\theta(x'),
+    \label{eqn:contrastive-loss-ebm-simplify}\]
+
+<p>where you take advantage of the model’s (evolving or being learned) distribution and optimize its parameters \(\theta\) by correcting its sampling or generative trajectories with the truth (or data) via enforcing the fact that data points should live on the low-energy positions of the model’s energy landscape while non-data points should live on higher-energy spots.</p>
+
+<figure style="text-align: center;">
+  <img src="/assets/img/post_imgs/energy_carving.png" alt="My Image" width="600" />
+  <figcaption style="color: #828282; font-style: italic; margin-top: 8px; font-size: 0.9rem;">
+    Figure 2: A simple illustration of the effects in training an EBM with respect to its energy landscape and data points.
+  </figcaption>
+</figure>
+
+<p>This intriguing objective \(\mathcal{L}_{CD}\) helps led to the development of much better methods, such as <a href="https://arxiv.org/abs/1503.03585">diffusion modeling</a> which arose from <a href="https://jmlr.org/papers/volume6/hyvarinen05a/hyvarinen05a.pdf">score matching</a>, paving the way for modern unsupervised learning.</p>
+
+<p>Finally, a fascinating thing about Enegy-based modeling is its resemblance to Reinforcement Learning. Specifically, both approaches rely on the model’s exploring its learned distribution and make appropriate corrections, to fine-tune its weights (via rewards or simply backpropagate using errors from the truth). However, both approaches only work well if the evolving distribution is relatively accurate and stable, and if the sampling method is accurate enough.</p>
+
+<h2 id="additional-references">Additional References</h2>
+
+<ol>
+  <li><a href="https://www.cs.toronto.edu/~fritz/absps/cogscibm.pdf">A Learning Algorithm for Boltzmann Machines</a>, David H. Ackley, Geoffrey E. Hinton, and Terrence J. Sejnowski.</li>
+  <li><a href="https://arxiv.org/abs/2101.03288">How to Train Your Energy-based Models</a>, Yang Song and Diederik P. Kingma.</li>
+  <li><a href="https://arxiv.org/abs/1903.08689">Implicit Generation and Generalization in Energy-Based Models</a>, Yilun Du and Igor Mordatch.</li>
+  <li><a href="http://yann.lecun.com/exdb/publis/pdf/lecun-06.pdf">A Tutorial on Energy-Based Learning</a>, Yann LeCun, Sumit Chopra, Raia Hadsell, Marc’Aurelio Ranzato, and Fu Jie Huang.</li>
+</ol>
+
+            </div>
+
+        </section>
+
+
+        <footer style="width: 100%; float: none; position: static; text-align: center; padding-top: 50px;">
+            <div style="font: 12px/1.2 Crimson Pro, serif">
+                <p>
+                    <small>
+                        Copyright © Bao Pham
+                    </small>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/assets/js/scale.fix.js"></script>
+</body>
+
+</html>

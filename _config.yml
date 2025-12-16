@@ -1,0 +1,46 @@
+# Basic Information 
+title: Bao Pham
+position: Ph.D. Candidate
+affiliation: Rensselaer Polytechnic Institute
+affiliation_link: https://www.rpi.edu
+affiliation_logo: 
+email: phamb (at) rpi.edu
+
+# Search Engine Optimization (SEO)
+keywords: bao pham, pham bao, baopham, phambao
+canonical: https://bhqpham.com
+description: Bao is a Ph.D. student who works on energy-based modeling and Dense Associative Memory models.
+
+# The option is used to enable the Illinois template.
+enable_hopkins_logo: false
+
+# The option is used to show the last update time.
+enable_last_update: false
+
+# Links
+link_type: icon #text/icon
+google_scholar: https://scholar.google.com/citations?user=m96Cuh8AAAAJ
+github_link: https://github.com/Lemon-cmd
+#linkedin: https://www.linkedin.com/in/liuyaoyao/
+twitter: https://x.com/baophamhq
+
+# Images 
+avatar: ./assets/img/headshot_white.png
+
+# Footnotes
+#footnote: Feel free to use my website's source code.
+#footnote_link: https://github.com/yaoyao-liu/minimal-light
+
+# Analytics
+# Please remove the following lines about analytics services if you fork my project. 
+# Otherwise, the analytics information of your website will be recorded to my ClustrMaps accounts.
+# clustrmaps_id: HV0rAUdAxpfEQLOsVs0FcJTR2rKVI5sEQUZIDM-N_HY
+
+# The following files will be removed from the generated website.
+exclude:
+  - build.sh
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENSE
+  - CNAME

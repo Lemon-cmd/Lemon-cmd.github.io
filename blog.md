@@ -7,7 +7,7 @@ permalink: /blog/
 <br>
 
 ## Blog Posts
-
+---
 ### Research
 <ul>
   {% for post in site.posts %}
@@ -24,7 +24,6 @@ permalink: /blog/
     {% endif %}
   {% endfor %}
 </ul>
-
 <br>
 
 ### Software

@@ -5,7 +5,6 @@ permalink: /blog/
 ---
 
 <br>
-<br>
 
 ## Blog Posts
 

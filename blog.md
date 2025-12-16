@@ -4,8 +4,6 @@ title:
 permalink: /blog/
 ---
 
-<br>
-
 ## Blog Posts
 
 ### Research

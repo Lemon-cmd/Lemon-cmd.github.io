@@ -3,7 +3,7 @@ layout: blog
 title: 
 permalink: /blog/
 ---
-## Blog Posts
+
 ### Research
 <ul>
   {% for post in site.posts %}

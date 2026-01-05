@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+    <title>A Quick but Terrible Introduction to Jax? | Bao Pham</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="Bao Pham">
+    <meta name="keywords" content="bao pham, pham bao, baopham, phambao">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css"
+        integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/pub.css">
+    <link rel="stylesheet" href="/assets/css/nav.css">
+
+    <script src="/assets/js/github-stars.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.js"></script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myLinks");
+            if (x.style.display === "inline") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "inline";
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="topnav">
+        <div id="myLinks">
+            
+    <a class="normal" href="/blog/">Blog</a>
+
+    <a class="normal" href="/">Home</a>
+
+
+
+        </div>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+
+    <div class="wrapper">
+
+        <section style="width: 100%; float: none; max-width: 800px; margin: 0 auto; padding-top: 60px;">
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <a href="/blog/" style="font-size: 1.2rem; color: #828282; text-decoration: none;">&larr; Back to
+                    Blog</a>
+
+                
+            </div>
+
+            <h1>A Quick but Terrible Introduction to Jax?</h1>
+            <p style="color: #828282; font-family: 'Ubuntu Mono', monospace; font-size: 0.9rem;">
+                December 18, 2025
+            </p>
+            <hr>
+
+            <div style="text-align: justify;">
+                <h2 id="introduction">Introduction</h2>
+
+<p>For the machine learning (<strong>ML</strong>) community, it is typical to rely on the <a href="https://pytorch.org">PyTorch</a> or <strong>Torch</strong> framework to interact with all kinds of modern ML models and even build them, since the Torch platform already has a strong documentation and dedicated open-source community. Thus, one may ask: <strong>Is there a need for an alternative framework?</strong></p>
+
+<p>The answer is <strong>yes!</strong> Although Torch makes it easy to deploy, train, and interact with ML models, there are some aspects in which it lacks and requires further improvements. Moreover, Torch favors <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented design</a> tremendously, but some people would rather write their code in a more <a href="https://en.wikipedia.org/wiki/Functional_programming">functional way</a>. Such people may prefer the ML framework <a href="https://github.com/jax-ml/jax">Jax</a> created by Google.</p>
+
+<p>In this post, I will focus on introducing some general concepts that people should know when it comes to utilizing Jax and also highlight some pitfalls of both Torch and Jax.</p>
+
+<p><strong><em>Disclaimer: I am not a guru of either one of the frameworks. I like them both. This post and subsequent ones will serve as reminders to my forgetting brain…</em></strong></p>
+
+<h2 id="vmap">Vmap</h2>
+<p>The first essential tool of Jax you should know is <code class="language-plaintext highlighter-rouge">jax.vmap</code>. Although Torch handles many things (like batching of inputs) behind the scene for you, it is still essential for you to be able to write and handle further complex batching requirements of your code.</p>
+
+<p>For example, let’s assume we are working with a bunch of dynamical variables where you want to apply a function at different times and for different variables independently. How do you flexibly handle this aspect without writing an explicit <strong>for-loop</strong> that is slow?</p>
+
+<p>Let’s assume that our input is \(\mathbf{x} \in \mathbb{R}^{T \times B \times D}\), where \(T\) is the number of timesteps, \(B\) is the number of samples, and \(D\) is their dimensionality.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">jax</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">jax.numpy</span> <span class="k">as</span> <span class="n">jnp</span>
+<span class="kn">from</span> <span class="n">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="k">def</span> <span class="nf">mat_prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+    <span class="sh">'''</span><span class="s">Args:
+        x: Tensor of shape D 
+        w: a learnable weight of shape D x K 
+    Output:
+        y: a vector of shape K
+    </span><span class="sh">'''</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="p">.</span><span class="nf">einsum</span><span class="p">(</span><span class="sh">'</span><span class="s">d, d k -&gt; k</span><span class="sh">'</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">B</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">D</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">D</span><span class="p">])</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="n">D</span><span class="p">,</span> <span class="n">K</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">D</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="nf">vmap</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="nf">vmap</span><span class="p">(</span><span class="nf">partial</span><span class="p">(</span><span class="n">mat_prod</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">w</span><span class="p">)))(</span><span class="n">x</span><span class="p">))</span> 
+</code></pre></div></div>
+
+<p>Yes… just wrap <code class="language-plaintext highlighter-rouge">jax.vmap</code> twice to handle the batching over \(T\) and \(B\) axes. The caveat here is that <code class="language-plaintext highlighter-rouge">jax.vmap</code> will also pass over our weight <code class="language-plaintext highlighter-rouge">w</code> matrix which is of shape \(\mathbb{R}^{D \times K}\). To circumvent this technicality, we utilize the <code class="language-plaintext highlighter-rouge">partial</code> function to set <code class="language-plaintext highlighter-rouge">w</code> as our static variable such that <code class="language-plaintext highlighter-rouge">jax.vmap</code> will ignore it.</p>
+
+<p><strong><em>Side note: Jax will move your NumPy arrays to your GPU automatically.</em></strong></p>
+
+<h2 id="just-in-time-compilation">Just-in-Time Compilation</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/Just-in-time_compilation">Just-in-Time</a> (<strong>JIT</strong>) compilation is a form of <strong>dynamic compilation</strong> which happens during execution of a program <strong>at run time</strong> rather than before execution. Since the compilation happens during run time, this aspect is ideal for an interpreted programming language, like Python, where the optimization of the code’s run time is extremely limited unlike that of C/C++. So, why do we need to care about JIT in ML?</p>
+
+<p>Well, if we can compile our ML models, they will run faster and hopefully, more memory efficient. Jax was the first one to offer JIT way before Torch. Moreover, due to the fact Jax favors functional programming, the JIT compiler of Jax is much more flexible and less prone to compilation failures comparing to its counterpart, Torch.</p>
+
+<p>Assume we are performing a typical matrix product:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">mat_prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+    <span class="sh">'''</span><span class="s">Args:
+        x: a vector of shape D (representing a data sample)
+        w: a learnable weight of shape D x K 
+    Output:
+        y: a vector of shape K
+    </span><span class="sh">'''</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="p">.</span><span class="nf">einsum</span><span class="p">(</span><span class="sh">'</span><span class="s">d, d k -&gt; k</span><span class="sh">'</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+
+<span class="n">B</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">D</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="n">B</span><span class="p">,</span> <span class="n">D</span><span class="p">])</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="n">D</span><span class="p">,</span> <span class="n">K</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">D</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="nf">jit</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="nf">vmap</span><span class="p">(</span><span class="nf">partial</span><span class="p">(</span><span class="n">mat_prod</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">w</span><span class="p">)(</span><span class="n">x</span><span class="p">))))</span>
+</code></pre></div></div>
+
+<p>Compilation will first happen and then the compiled function is called. Meanwhile, in the case of Torch (<strong>v2.0.0+</strong>), our code would be</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+
+<span class="n">D</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="n">mat_prod</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+<span class="n">compiled_mat_prod</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">mat_prod</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">compiled_mat_prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>At this point, I can imagine your face being something like the following…</p>
+
+<figure style="text-align: center;">
+  <img src="/assets/img/post_imgs/overcomplicating_meme.png" alt="My Image" width="300" />
+  <figcaption style="color: #828282; font-style: italic; margin-top: 8px; font-size: 0.9rem;">
+    Figure 1: Why do you want me to use Jax....?
+  </figcaption>
+</figure>
+
+<h2 id="complicated-stuff-is-too-complicated-for-torch-jit">Complicated Stuff is too Complicated for Torch-JIT</h2>
+
+<p>Although the JIT compiler is getting better for Torch as time passes, a particular example in which I can illustrate the power of Jax is writing a simple <a href="https://en.wikipedia.org/wiki/Langevin_dynamics">Langevin dynamics</a> MCMC sampler, which involves a neural network or an <a href="https://bhqpham.com/research/2025/12/15/ebm.html">Energy-based model</a>.</p>
+
+<p>The whole point of this program is to extract the gradient \(\nabla_{x_t} E_\theta (x_t) \in \mathbb{R}^N\) of the model \(E_\theta (x_t) : \mathbb{R}^N \rightarrow \mathbb{R}\), with respect to the dynamical variable \(x_t\), and perform gradient descent on an energy landscape for a number of steps. The larger the number of steps, the closer the particle is to equilibrium. You can also adapt this code for the <a href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/">reverse process</a> of diffusion models as well.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="n">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="k">def</span> <span class="nf">langevin</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">jax</span><span class="p">.</span><span class="n">Array</span><span class="p">,</span>
+    <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> 
+    <span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">key</span><span class="p">:</span> <span class="n">jax</span><span class="p">.</span><span class="n">Array</span><span class="p">,</span>
+    <span class="n">step_size</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Args:
+        x:      Batch of samples or particles (of shape N x D)
+        params: FrozenDict object of weights (obtained from initializing Flax module)
+        fn:     Function from the Flax module
+        key:    Random seed (e.g., jax.random.PRNGKey(42))
+    Output:
+        y:      Updated particles (of shape N x D)
+    </span><span class="sh">"""</span>
+    <span class="n">compiled_fn</span> <span class="o">=</span> <span class="n">jax</span><span class="p">.</span><span class="nf">vmap</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="nf">grad</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">vals</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">vals</span>
+        <span class="n">key</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">jax</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">dEdx</span> <span class="o">=</span> <span class="nf">compiled_fn</span><span class="p">({</span><span class="sh">'</span><span class="s">params</span><span class="sh">'</span><span class="p">:</span> <span class="n">params</span><span class="p">},</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">noise</span> <span class="o">=</span> <span class="p">(</span><span class="n">step_size</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">jax</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">x</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">dEdx</span> <span class="o">+</span> <span class="n">noise</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">key</span>
+
+    <span class="n">y</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">jax</span><span class="p">.</span><span class="n">lax</span><span class="p">.</span><span class="nf">fori_loop</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>                      <span class="c1"># Initial input to determine shape
+</span><span class="n">model</span> <span class="o">=</span> <span class="nc">Unet</span><span class="p">(...)</span>                            <span class="c1"># Create your model (Flax module)
+</span><span class="n">params</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">init</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="sh">"</span><span class="s">params</span><span class="sh">"</span><span class="p">]</span>        <span class="c1"># Initialize the weight (no vmap)
+</span><span class="n">trained_params</span> <span class="o">=</span> <span class="nf">train</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="p">...)</span>   <span class="c1"># Train the model
+</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">])</span> <span class="c1"># We have 128 priors to sample from...
+</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">jax</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nc">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="nf">partial</span><span class="p">(</span>
+    <span class="n">langevin</span><span class="p">,</span>
+    <span class="n">fn</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">)(</span><span class="n">x</span><span class="p">,</span> <span class="n">trained_params</span><span class="p">)</span>      <span class="c1"># We can use partial to set our static variables
+</span></code></pre></div></div>
+
+<p>In the above code, I assume we are using <a href="https://github.com/google/flax">Flax</a>, but please consider alternative libraries like <a href="https://github.com/patrick-kidger/equinox">Equinox</a> too. Also, check out Patrick Kidger’s <a href="https://kidger.site/">blog</a>!</p>
+
+<p>Anyhow, my point of showing you this example is when you do additional complicated things, like taking the Jacobian or some sort of auto-differentiation <strong>during inference</strong>. The Torch version of this algorithm 
+might break due to the fact we need to compile (just-in-time) for more complex functions: <code class="language-plaintext highlighter-rouge">torch.func.jvp</code>, <code class="language-plaintext highlighter-rouge">torch.func.grad</code>, and many more.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Overall, I enjoy writing Jax code since it forces me to know a lot of details (which Torch hides from you) and provides a much greater control for manipulating and training my ML models. Although Jax intimidates many people, at the end of the day this framework is a <strong>roided-up</strong> version of NumPy, taking advantage of GPUs. I think you can prototype your new ideas easily and run them at a much faster pace than Torch; it may save you time, or it may not. Use whichever framework that is comfortable to you!</p>
+
+<figure style="text-align: center;">
+  <img src="/assets/img/post_imgs/jax_meme.png" alt="My Image" width="300" />
+  <figcaption style="color: #828282; font-style: italic; margin-top: 8px; font-size: 0.9rem;">
+        Figure 2: I am not a spokeperson of Google nor am I employed by that fancy company. 
+  </figcaption>
+</figure>
+
+            </div>
+
+        </section>
+
+
+        <footer style="width: 100%; float: none; position: static; text-align: center; padding-top: 50px;">
+            <div style="font: 12px/1.2 Crimson Pro, serif">
+                <p>
+                    <small>
+                        Copyright © Bao Pham
+                    </small>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/assets/js/scale.fix.js"></script>
+</body>
+
+</html>

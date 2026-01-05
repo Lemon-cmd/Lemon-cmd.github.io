@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+    <title>Hopfield Networks | Bao Pham</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="Bao Pham">
+    <meta name="keywords" content="bao pham, pham bao, baopham, phambao">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css"
+        integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/pub.css">
+    <link rel="stylesheet" href="/assets/css/nav.css">
+
+    <script src="/assets/js/github-stars.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.js"></script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myLinks");
+            if (x.style.display === "inline") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "inline";
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="topnav">
+        <div id="myLinks">
+            
+    <a class="normal" href="/blog/">Blog</a>
+
+    <a class="normal" href="/">Home</a>
+
+
+
+        </div>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+
+    <div class="wrapper">
+
+        <section style="width: 100%; float: none; max-width: 800px; margin: 0 auto; padding-top: 60px;">
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <a href="/blog/" style="font-size: 1.2rem; color: #828282; text-decoration: none;">&larr; Back to
+                    Blog</a>
+
+                
+            </div>
+
+            <h1>Hopfield Networks</h1>
+            <p style="color: #828282; font-family: 'Ubuntu Mono', monospace; font-size: 0.9rem;">
+                December 22, 2025
+            </p>
+            <hr>
+
+            <div style="text-align: justify;">
+                <h2 id="introduction">Introduction</h2>
+
+<p>In my <a href="https://bhqpham.com/research/2025/12/15/ebm.html">previous post</a>, I provided a quick introduction to Energy-based modeling (<strong>EBM</strong>), which is an alternative approach to <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation">maximum likelihood estimation</a>. Obviously, much of the concepts in EBM are borrowed from Physics (specifically, thermodynamics). Thus, it is not a surprise that early attempts of generative modeling or machine learning also came from physicists and pure mathematicians.</p>
+
+<p>In this post, I am keen to introduce the concept of the Classical Associative Memory (<strong>AM</strong>) systems, also commonly known as <a href="https://en.wikipedia.org/wiki/Hopfield_network">Hopfield networks</a>. Such systems, derived from <a href="https://en.wikipedia.org/wiki/Ising_model">Ising models</a>, were first introduced by <a href="https://en.wikipedia.org/wiki/Shun%27ichi_Amari">Shun’ichi Amari</a> in <strong>1972</strong>, and rediscovered and popularized by <a href="https://en.wikipedia.org/wiki/John_Hopfield">John J. Hopfield</a> in <strong>1982</strong>. In recent times, both individuals have finally received big accolades for their achievements. For examples, Amari received the <strong><em>Kyoto Prize</em></strong> in 2025 and Hopfield received the <strong><em>Nobel Prize in Physics</em></strong> in 2024.</p>
+
+<p>Nonetheless, I would like to emphasize the following point: the introduction of AM systems truly had helped pave the way for more advance generative models, e.g., <a href="https://www.cs.toronto.edu/~fritz/absps/cogscibm.pdf">Boltzmann Machines</a> and even <a href="https://arxiv.org/abs/1503.03585">diffusion models</a> (which were also introduced by physicists). Although these networks were <strong><em>elementary</em></strong>, their fundamental concepts are still being applied even in today’s sophisticated deep learning models.</p>
+
+<h2 id="recurrency-via-energy-minimization">Recurrency via Energy Minimization</h2>
+
+<p>To begin, Hopfield networks were the earliest Recurrent Neural Networks (<strong>RNNs</strong>), Energy-based models, and working examples of generative modeling. Specifically, one can generate new patterns<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>, and even perform pattern recognition or recovery. For example, you can provide a perturbed example and the model can effectively <strong><em>denoise</em></strong> or <strong><em>fill in</em></strong> the missing blanks of the pattern. This particular process is accomplished via energy minimization, or simply performing gradient descent on a global energy function:</p>
+
+\[E(x) = -\frac{1}{2} x^\top W x,\]
+
+<p>where \(x \in \{\pm 1\}^N\) is a binary variable in which we evolve (or update) over time and \(E(x) \in \mathbb{R}\). Meanwhile, \(W\) is our <strong>memory matrix</strong> obtained via</p>
+
+\[W = \sum_{\mu = 1}^K  \xi^{\mu} (\xi^{\mu})^\top,\]
+
+<p>which is a summation over all of the dot-products of each pattern \(\xi^{\mu} \in \{\pm 1\}^N\) to itself that we want the system to <strong><em>memorize</em></strong><sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup>. This particular way of forming \(W\) is typically seen as performing <a href="https://en.wikipedia.org/wiki/Hebbian_theory">Hebbian Learning</a>.</p>
+
+<figure style="text-align: center;">
+  <img src="/assets/img/post_imgs/am_retrieval.png" alt="My Image" width="600" />
+  <figcaption style="color: #828282; font-style: italic; margin-top: 8px; font-size: 0.9rem;">
+    Figure 1: A simple illustration of the energy minimization in AM networks. Imagine that our memories are extremely separable. As time progresses, the system gets closer to equilibrium. When equilibrium is achieved, where increasing timesteps no longer affect the dynmical variable, a memory (which is a stable point) is retrieved.
+  </figcaption>
+</figure>
+
+<h2 id="memories-and-fixed-points">Memories and Fixed Points</h2>
+
+<p>In order to make usage of this system, we simply query the system and perform gradient descent such that we update our dynamical variable \(x\) with \(\nabla_x E(x)\):</p>
+
+\[x^* = \underset{x}{\text{arg min}} \,E(x)\]
+
+<p>where hopefully the system converges to <strong><em>equilibrium</em></strong> such that \(x^* = \xi^* \in \{ \xi^{\mu} \}_{\mu = 1, \dots, K}\) is a <strong>memory</strong> stored inside of our Hopfield network. In other words, our memories (stored inside of the AM network) are simply <strong><em>local minima</em></strong> of the energy function \(E(x)\), which the system will converge to, given a query \(x\)<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>.</p>
+
+<p>This aspect is the <strong><em>main distinction</em></strong> between these networks and the typically mentioned <a href="https://en.wikipedia.org/wiki/Recurrent_neural_network">RNNs</a>. Particularly, recurrency happens via energy minimization, while in typical RNNs, recurrency occurs by treating an input as a sequence (akin to performing a 1-dimensional convolution operator).</p>
+
+<h2 id="spurious-patterns-the-duality-of-forgetting">Spurious Patterns: The Duality of Forgetting</h2>
+
+<p>So, what happened to these models?</p>
+
+<p>It turned out that Hopfield and others found that these classical AM systems were not capable of storing many patterns. Specifically, <a href="https://www.pnas.org/doi/10.1073/pnas.79.8.2554">Hopfield et al.</a> empirically measured that these networks can only store \(K^\text{max} \approx 0.15N\) patterns, in 1982. This was later formalized, in 1985, using statistical mechanics techniques by <a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.55.1530">Amit et al.</a>, demonstrating that beyond this threshold, the probability of successful memory retrieval decays rapidly due to interference between stored patterns and provided an analytical memorization capacity of \(K^\text{max} \approx 0.14N\) patterns.</p>
+
+<p>Thus, when the number of patterns \(K\) exceeds \(K^\text{max}\), new local minima of the energy function are formed. Such patterns are commonly known as <strong><em>spurious patterns</em></strong>, depicted as \(\xi'\) in Figure 2. They appear when the memory or storage capacity is exceeded and effectively, hinder the effectiveness of the memory retrieval capability of these AM systems. Funnily enough, although spurious patterns do hinder memorization, we found them to be <a href="https://arxiv.org/pdf/2505.21777">initial signs of generalization</a> in generative diffusion modeling.</p>
+
+<figure style="text-align: center;">
+  <img src="/assets/img/post_imgs/cam_dam.png" alt="My Image" width="600" />
+  <figcaption style="color: #828282; font-style: italic; margin-top: 8px; font-size: 0.9rem;">
+    Figure 2: A visual highlight of spurious patterns, new local minima of the energy function, which are different from the supposed stored patterns of the AM system. Modern AM systems, in contrast, can store more patterns since their energy function has sharper basins and thus, lessen the crosstalks between stored patterns. 
+  </figcaption>
+</figure>
+
+<p>In year 2016, <a href="https://arxiv.org/abs/1606.01164">Krotov and Hopfield</a> found that one can apply an activation (or interaction) function on top of the dot product in \(E(x)\), which <strong><em>sharpens the basin</em></strong> around the stored patterns and lessens their interferences among each other, leading to super-linear or even exponential storage capacity for uncorrelated patterns. These modern variants of AM systems are now known as Dense Associative Memories, which I will introduce and discuss more on a separate post.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Overall, these systems provide an elegant platform to perform interesting studies and developments. For examples, one can study how a dynamical system memories and generalizes, as my collaborators and I did in this <a href="https://arxiv.org/pdf/2505.21777">work</a>, or even design new neural architecture, like we also did <a href="https://arxiv.org/abs/2302.07253">here</a>. Nonetheless, despite the recent recognition, I still think this particular topic is unpopular among the practioners, while popular among the theorists of machine learning. I hope this fact will change as there are many interesting things yet to be discovered with these particular models.</p>
+
+<h2 id="references">References</h2>
+
+<ol>
+  <li>
+    <p><a href="https://ieeexplore.ieee.org/document/1672070">Learning Patterns and Pattern Sequences by Self-Organizing Nets of Threshold Elements
+</a>. Shun’ichi Amari.</p>
+  </li>
+  <li>
+    <p><a href="https://www.pnas.org/doi/10.1073/pnas.79.8.2554">Neural Networks and Physical Systems with Emergent Collective Computational Abilities</a>. John J. Hopfield.</p>
+  </li>
+  <li>
+    <p><a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.55.1530">Storing Infinite Numbers of Patterns in a Spin-Glass Model of Neural Networks</a>. Daniel J. Amit and Hanoch Gutfreund.</p>
+  </li>
+  <li>
+    <p><a href="https://arxiv.org/abs/1606.01164">Dense Associative Memory for Pattern Recognition</a>. Dmitry Krotov and John J. Hopfield.</p>
+  </li>
+  <li>
+    <p><a href="https://www.cs.toronto.edu/~fritz/absps/cogscibm.pdf">A Learning Algorithm for Boltzmann Machines</a>. David H. Ackley, Geoffrey E. Hinton, and Terrence J. Sejnowski.</p>
+  </li>
+</ol>
+
+<h2 id="footnotes">Footnotes</h2>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1">
+      <p>These new patterns are called <strong>spurious patterns</strong>. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>It is best to note that \(W_{ij} = W_{ji}\) and when \(i = j\), \(W_{ij} = 0\) in order for the network to converge or behave accordingly. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p>See Figure 1 for a visual illustration. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+            </div>
+
+        </section>
+
+
+        <footer style="width: 100%; float: none; position: static; text-align: center; padding-top: 50px;">
+            <div style="font: 12px/1.2 Crimson Pro, serif">
+                <p>
+                    <small>
+                        Copyright © Bao Pham
+                    </small>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/assets/js/scale.fix.js"></script>
+</body>
+
+</html>

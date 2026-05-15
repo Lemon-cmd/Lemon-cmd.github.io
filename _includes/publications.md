@@ -1,6 +1,6 @@
 <h1 id="publications"></h1>
 
-<h2 style="margin: 60px 0px -15px;">Selected Works <temp style="font-size:15px;">(* denotes Equal Contribution)</temp><temp style="font-size:15px;"></temp></h2>
+<h2 style="margin: 60px 0px -15px;">Selected Works <temp style="font-size:22px;">(* denotes Equal Contribution)</temp><temp style="font-size:22px;"></temp></h2>
 
 
 <div class="publications">

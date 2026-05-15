@@ -1,4 +1,9 @@
 main:
+  - title: "Modern Methods in Associative Memory"
+    authors: <strong>Bao Pham</strong>, Mohammed J.Zaki, Luca Ambrogioni, Dmitry Krotov, Matteo Negri
+    pdf: https://arxiv.org/abs/2604.26841
+    code: https://github.com/s-sahoo/duo
+    image: /assets/img/teaser_imgs/tweet_fig_1.png
 
   - title: "Modern Methods in Associative Memory"
     authors: Dmitry Krotov, Benjamin Hoover, Parikshit Ram, <strong>Bao Pham</strong>

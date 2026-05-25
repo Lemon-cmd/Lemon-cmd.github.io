@@ -40,6 +40,15 @@
       {% if link.page %} 
       <a href="{{ link.page }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Project Page</a>
       {% endif %}
+      {% if link.talk_1 %} 
+      <a href="{{ link.talk_1}}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Talk 1</a>
+      {% endif %}
+      {% if link.talk_2 %} 
+      <a href="{{ link.talk_2}}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Talk 2</a>
+      {% endif %}
+      {% if link.talk_3 %} 
+      <a href="{{ link.talk_3}}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Talk 3</a>
+      {% endif %}
       {% if link.data %} 
       <a href="{{ link.data }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Dataset</a>
       {% endif %}

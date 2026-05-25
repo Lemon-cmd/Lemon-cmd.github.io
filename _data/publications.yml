@@ -16,6 +16,8 @@ main:
     pdf: https://arxiv.org/abs/2505.21777
     code: https://github.com/Lemon-cmd/Diffusion-Models-and-Associative-Memory
     slides: https://sites.google.com/view/aspen2026/talks-slides
+    talk_1: https://neurips.cc/virtual/2024/107925
+    talk_2: https://iclr.cc/virtual/2025/33414
     image: /assets/img/teaser_imgs/energy_teaser.png
 
   - title: "Energy Transformer"

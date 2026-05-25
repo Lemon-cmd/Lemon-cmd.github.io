@@ -26,6 +26,7 @@ main:
     code_jax: https://github.com/bhoov/energy-transformer-jax
     code_torch: https://github.com/Lemon-cmd/energy-transformer-torch
     slides: https://neurips.cc/virtual/2023/poster/71901
+    talk_1: https://www.youtube.com/watch?v=5LXiQUsnHrI
     image: /assets/img/teaser_imgs/energy_transformer.png
 
   #- title: "HDR-GS: Efficient High Dynamic Range Novel View Synthesis at 1000x Speed via Gaussian Splatting"

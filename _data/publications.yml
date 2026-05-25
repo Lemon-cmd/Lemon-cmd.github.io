@@ -9,6 +9,7 @@ main:
     authors: Dmitry Krotov, Benjamin Hoover, Parikshit Ram, <strong>Bao Pham</strong>
     pdf: https://arxiv.org/abs/2507.06211
     code: https://tutorial.amemory.net/
+    talk_1: https://slideslive.com/39043831/modern-methods-in-associative-memory
     image: /assets/img/teaser_imgs/toy_example.png
 
   - title: "Memorization to Generalization: Emergence of Diffusion Models from Associative Memory"

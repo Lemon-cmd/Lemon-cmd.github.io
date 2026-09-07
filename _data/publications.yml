@@ -1,8 +1,6 @@
 main:
   - title: "Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data"
     authors: <strong>Bao Pham</strong>, Mohammed J. Zaki, Luca Ambrogioni, Dmitry Krotov, Matteo Negri
-    conference_short: EMNLP
-    conference: Empirical Methods in Natural Language Processing <strong>(EMNLP)</strong>, 2026.
     page: /papers/language-diffusion-associative-memory/
     pdf: https://arxiv.org/abs/2604.26841
     code: https://github.com/Lemon-cmd/Associative-Memory-and-Language-Diffusion
@@ -26,8 +24,6 @@ main:
 
   - title: "Energy Transformer"
     authors: Benjamin Hoover*, Yuchen Liang*, <strong>Bao Pham*</strong>, Rameswar Panda, Hendrik Strobelt, Duen Horng Chau, Mohammed J. Zaki, Dmitry Krotov
-    conference_short: NeurIPS
-    conference: Neural Information Processing Systems <strong>(NeurIPS)</strong>, 2023.
     page: /papers/energy-transformer/
     pdf: https://arxiv.org/abs/2302.07253
     code_jax: https://github.com/bhoov/energy-transformer-jax

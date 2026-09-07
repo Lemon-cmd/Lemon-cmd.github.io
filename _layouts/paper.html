@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: " en-US" }}">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ page.title }}</title>
+
+  <meta name="description" content="{{ page.description | default: page.title }}">
+  <meta name="keywords" content="{{ page.keywords | default: site.keywords }}">
+  <link rel="canonical" href="{{ site.canonical }}{{ page.url }}" />
+
+  <meta property="og:title" content="{{ page.title }}" />
+  <meta property="og:description" content="{{ page.description | default: page.title }}" />
+  <meta property="og:url" content="{{ site.canonical }}{{ page.url }}" />
+  <meta property="og:image" content="{{ site.canonical }}{{ page.teaser }}" />
+
+  <meta name="twitter:title" content="{{ page.title }}">
+  <meta name="twitter:description" content="{{ page.description | default: page.title }}">
+  <meta name="twitter:image" content="{{ site.canonical }}{{ page.teaser }}">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129504;</text></svg>">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/project-page/css/bulma.min.css">
+  <link rel="stylesheet" href="/assets/project-page/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="/assets/project-page/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css"
+    integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/project-page/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/assets/project-page/js/bulma-carousel.min.js"></script>
+  <script src="/assets/project-page/js/bulma-slider.min.js"></script>
+  <script src="/assets/project-page/js/index.js"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    .back-home {
+      font-family: 'Google Sans', sans-serif;
+      color: #4a4a4a;
+    }
+
+    .publication-teaser img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    #BibTeX pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item back-home" href="/">&larr; {{ site.title }}</a>
+    </div>
+  </nav>
+
+  <!-- Title / authors / links -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h1 class="title is-1 publication-title">{{ page.title }}</h1>
+
+            <div class="is-size-5 publication-authors">
+              {% for author in page.authors %}
+              <span class="author-block">
+                {% if author.url %}<a href="{{ author.url }}"{% if author.url contains "//" %} target="_blank"{% endif %}>{{ author.name }}</a>{% else %}{{ author.name }}{% endif %}{% if author.symbol %}<sup>{{ author.symbol }}</sup>{% endif %}{% unless forloop.last %},{% endunless %}
+              </span>
+              {% endfor %}
+            </div>
+
+            {% if page.venue or page.note %}
+            <div class="is-size-5 publication-authors" style="margin-top: 0.75rem;">
+              {% if page.venue %}<span class="author-block publication-venue">{{ page.venue }}</span>{% endif %}
+              {% if page.note %}<span class="eql-cntrb"><small><br>{{ page.note }}</small></span>{% endif %}
+            </div>
+            {% endif %}
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                {% for link in page.links %}
+                <span class="link-block">
+                  <a href="{{ link.url }}" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="{{ link.icon }}"></i></span>
+                    <span>{{ link.name }}</span>
+                  </a>
+                </span>
+                {% endfor %}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% if page.teaser %}
+  <!-- Teaser -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body publication-teaser">
+        <img src="{{ page.teaser }}" alt="{{ page.title }}">
+        {% if page.teaser_caption %}
+        <h2 class="subtitle has-text-centered" style="margin-top: 1.25rem;">
+          {{ page.teaser_caption }}
+        </h2>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  <!-- End teaser -->
+  {% endif %}
+
+  {% if page.abstract %}
+  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>{{ page.abstract }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End abstract -->
+  {% endif %}
+
+  <!-- Page body -->
+  <section class="section">
+    <div class="container is-max-desktop content has-text-justified">
+      {{ content }}
+    </div>
+  </section>
+  <!-- End page body -->
+
+  {% if page.bibtex %}
+  <!-- BibTeX citation -->
+  <section class="section hero is-light" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">
+        BibTeX
+        <button id="copyBibtex" class="button is-small is-dark is-pulled-right">Copy</button>
+      </h2>
+      <pre><code id="bibtexCitation">{{ page.bibtex | strip }}</code></pre>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('copyBibtex')
+      const code = document.getElementById('bibtexCitation')
+      if (btn && code) {
+        btn.addEventListener('click', () => {
+          navigator.clipboard.writeText(code.innerText.trim())
+          btn.textContent = 'Copied'
+          setTimeout(() => { btn.textContent = 'Copy' }, 1500)
+        })
+      }
+    })
+  </script>
+  <!-- End BibTeX citation -->
+  {% endif %}
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              You are free to borrow the source code of this website, we just ask that you link back to this page in the
+              footer. <br> This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

@@ -68,11 +68,17 @@
             
             
             
+            
+            
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
                 <a href="/blog/" style="font-size: 1.2rem; color: #828282; text-decoration: none;">&larr; Back to
                     Blog</a>
 
+                
+                <a href="/research/2025/12/22/hn.html" style="font-size: 1.2rem; color: #828282; text-decoration: none;">
+                    Next Post &rarr;
+                </a>
                 
             </div>
 
@@ -91,7 +97,7 @@
 
 \[p_\theta(x) = \frac{\exp(-E_\theta(x))}{Z_\theta}\]
 
-<p>where \(Z_\theta = \int \exp (-E_\theta(x)) \mathrm{d}x\) is the partition function marginalized over \(x\) and \(\theta\) is a set of learnable parameters.</p>
+<p>where \(Z_\theta = \int \exp (-E_\theta(x)) \mathrm{d}x\) is the partition function marginalized over \(x \in \mathbb{R}^N\) and \(\theta\) is a set of learnable parameters.</p>
 
 <figure style="text-align: center;">
   <img src="/assets/img/post_imgs/energy_likelihood_relationship.png" alt="My Image" width="600" />
@@ -102,19 +108,18 @@
 
 <p>The goal of learning \(E_\theta (x) : \mathbb{R}^{N} \rightarrow \mathbb{R}\) such that \(p_\theta (x) \approx p_\text{data} (x)\) enables greater flexibility, since EBMs in principle can be defined with any differentiable architecture and trained using gradient-based methods, allowing them to model complex and high dimensional data while avoiding strong constraints, e.g., requiring the model to produce probabilities via \(\texttt{softmax}\).</p>
 
-<p>Despite the phrase <em>EBMs</em> makes these models seem niche, it turns out that a variant of them, <a href="https://arxiv.org/abs/1503.03585">diffusion models</a>, has been setting the state-of-the-art performances across a variety of domains and is commonly used in image and video generations. In much recent times, such models are also experiencing a strong burgeoning interest in <a href="https://arxiv.org/abs/2508.15487">language modeling</a>. Although I am biased, due to the fact that I work in this domain, I think EBMs will definitely replace the typical Autoregressive models when it comes to language modeling in the near future (but I will not be making my arguments here).</p>
+<p>Although the phrase <em>EBMs</em> may make these models appear niche, it turns out that <a href="https://arxiv.org/abs/1503.03585">diffusion models</a>, which are a type of EBMs, have been setting the state-of-the-art performances across a variety of domains and are now the standard when it comes to image and video generations. In much recent times, such models are also experiencing a strong burgeoning interest in <a href="https://arxiv.org/abs/2508.15487">language modeling</a>. Although I am biased, due to the fact that I work in this domain, I think EBMs will definitely replace the typical Autoregressive models when it comes to language modeling in the near future (but I will not be making my arguments here).</p>
 
 <h2 id="how-to-learn-the-energy">How to Learn the Energy?</h2>
-<p>In the typical setup of learning a model \(p_\theta(x) \in [0, 1]^{K}\) where \(\sum_{i}^K p^{(i)}_\theta(x) = 1\), we heavily rely on the minimization of the negative likelihood to learn \(\theta\):</p>
+<p>In the typical setup of learning a model \(p_\theta(x) \in [0, 1]^{K}\), where \(\sum_{i}^K p^{(i)}_\theta(x) = 1\) and \(K\) is the number of categories, we heavily rely on the minimization of the negative likelihood to learn our model’s set of parameters \(\theta\):</p>
 
 \[\mathcal{L}(\theta) = - \mathbb{E}_{x \sim p_\text{data}} \big [ \log p_\theta(x) \big ]\]
 
-<p>which is typically accomplished by minimizing the function <a href="https://en.wikipedia.org/wiki/Cross-entropy">Cross-Entropy</a>. This means that we would like to <strong>constraint our model</strong> to produce <ins>a set of \(K\) logits</ins> which we will then convert to <ins>a set of probabilities</ins> via the \(\texttt{softmax}\) function. However, as stated above, there is an alternative way to accomplish \(p_\theta (x) \approx p_\text{data} (x)\) without constraining our model to producing a set of probabilities or $K$ logits.</p>
+<p>which is typically accomplished by minimizing the function <a href="https://en.wikipedia.org/wiki/Cross-entropy">Cross-Entropy</a>. This means that we would like to <strong>constraint our model</strong> to produce <ins>a set of \(K\) logits</ins> which we will then convert to <ins>a set of probabilities</ins> via the \(\texttt{softmax}\) function. However, as stated above, there is an alternative way to accomplish \(p_\theta (x) \approx p_\text{data} (x)\) without constraining our model to producing a set of probabilities or \(K\) logits.</p>
 
 <p>Specifically, minimizing the negative likelihood of the data is equivalent to minimizing the KL divergence between \(p_\text{data}(x)\) and \(p_\theta(x)\):</p>
 
-\[-\mathbb{E}_{x \sim p_\text{data}(x)} \big [ \log p_\theta (x) \big ] = \mathrm{D}_{KL} \big ( p_\text{data}(x) \, || \, p_\theta (x) \big ) - \mathbb{E}_{x \sim p_\text{data}(x)} \big [ \log p_\text{data} (x) \big ],
-    \label{eqn:mle-dkl-data-model}\]
+\[-\mathbb{E}_{x \sim p_\text{data}(x)} \big [ \log p_\theta (x) \big ] = \mathrm{D}_{KL} \big ( p_\text{data}(x) \, || \, p_\theta (x) \big ) - \mathbb{E}_{x \sim p_\text{data}(x)} \big [ \log p_\text{data} (x) \big ],\]
 
 <p>where \(\mathbb{E}_{x \sim p_\text{data}(x)} \big [ \log p_\text{data} (x) \big ]\) is a constant that does not depend on \(\theta\). As a result, we can estimate the gradient of the log-likelihood:</p>
 
@@ -129,7 +134,6 @@
     &amp; = \int \bigg ( \int \exp \big (-E_\theta (x) \big ) \mathrm{d} x \bigg )^{-1}  \exp \big ( -E_\theta (x) \big ) \big ( - \nabla_\theta E_\theta (x) \big ) \mathrm{d} x \\ 
     &amp; = \int p_\theta (x) \big ( - \nabla_\theta E_\theta (x) \big ) \big ) \mathrm{d}x \\ 
     &amp; = \mathbb{E}_{x \sim p_\theta (x)} \big [ - \nabla_\theta E_\theta (x) \big ],
-    \label{eqn:MCMC-expectation}
 \end{align}\]
 
 <p>To estimate \(\nabla_\theta \log Z_\theta\), we can obtain an unbiased sample \(x'\) from sampling approaches, such as <a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Monte Carlo Markov Chain</a> (MCMC) techniques, by drawing from our <em>evolving distribution</em> \(p_\theta (x)\):</p>
@@ -150,8 +154,7 @@
 
 <p>Altogether, the objective (I presented here) is commonly known as <a href="https://www.cs.toronto.edu/~fritz/absps/cdmiguel.pdf">Contrastive Divergence</a>, the objective originally utilized to train <a href="https://en.wikipedia.org/wiki/Boltzmann_machine">Boltzmann Machines</a>:</p>
 
-\[\mathcal{L}_{CD}(\theta) = E_\theta(x) - E_\theta(x'),
-    \label{eqn:contrastive-loss-ebm-simplify}\]
+\[\mathcal{L}_{CD}(\theta) = E_\theta(x) - E_\theta(x'),\]
 
 <p>where you take advantage of the model’s (evolving or being learned) distribution and optimize its parameters \(\theta\) by correcting its sampling or generative trajectories with the truth (or data) via enforcing the fact that data points should live on the low-energy positions of the model’s energy landscape while non-data points should live on higher-energy spots.</p>
 
@@ -169,10 +172,11 @@
 <h2 id="additional-references">Additional References</h2>
 
 <ol>
-  <li><a href="https://www.cs.toronto.edu/~fritz/absps/cogscibm.pdf">A Learning Algorithm for Boltzmann Machines</a>, David H. Ackley, Geoffrey E. Hinton, and Terrence J. Sejnowski.</li>
-  <li><a href="https://arxiv.org/abs/2101.03288">How to Train Your Energy-based Models</a>, Yang Song and Diederik P. Kingma.</li>
-  <li><a href="https://arxiv.org/abs/1903.08689">Implicit Generation and Generalization in Energy-Based Models</a>, Yilun Du and Igor Mordatch.</li>
-  <li><a href="http://yann.lecun.com/exdb/publis/pdf/lecun-06.pdf">A Tutorial on Energy-Based Learning</a>, Yann LeCun, Sumit Chopra, Raia Hadsell, Marc’Aurelio Ranzato, and Fu Jie Huang.</li>
+  <li><a href="https://www.cs.toronto.edu/~fritz/absps/cogscibm.pdf">A Learning Algorithm for Boltzmann Machines</a>. David H. Ackley, Geoffrey E. Hinton, and Terrence J. Sejnowski.</li>
+  <li><a href="https://arxiv.org/abs/2101.03288">How to Train Your Energy-based Models</a>. Yang Song and Diederik P. Kingma.</li>
+  <li><a href="https://arxiv.org/abs/1903.08689">Implicit Generation and Generalization in Energy-Based Models</a>. Yilun Du and Igor Mordatch.</li>
+  <li><a href="https://arxiv.org/abs/1912.03263">Your Classifier is Secretly an Energy Based Model and You Should Treat it Like One</a>. Will Grathwohl, Kuan-Chieh Wang, Jörn-Henrik Jacobsen, David Duvenaud, Mohammad Norouzi, and Kevin Swersky.</li>
+  <li><a href="http://yann.lecun.com/exdb/publis/pdf/lecun-06.pdf">A Tutorial on Energy-Based Learning</a>. Yann LeCun, Sumit Chopra, Raia Hadsell, Marc’Aurelio Ranzato, and Fu Jie Huang.</li>
 </ol>
 
             </div>

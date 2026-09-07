@@ -1,8 +1,11 @@
 main:
   - title: "Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data"
-    authors: <strong>Bao Pham</strong>, Mohammed J.Zaki, Luca Ambrogioni, Dmitry Krotov, Matteo Negri
+    authors: <strong>Bao Pham</strong>, Mohammed J. Zaki, Luca Ambrogioni, Dmitry Krotov, Matteo Negri
+    conference_short: EMNLP
+    conference: Empirical Methods in Natural Language Processing <strong>(EMNLP)</strong>, 2026.
+    page: /papers/language-diffusion-associative-memory/
     pdf: https://arxiv.org/abs/2604.26841
-    code: https://github.com/s-sahoo/duo
+    code: https://github.com/Lemon-cmd/Associative-Memory-and-Language-Diffusion
     image: /assets/img/teaser_imgs/tweet_fig_1.png
 
   - title: "Modern Methods in Associative Memory"
@@ -23,11 +26,14 @@ main:
 
   - title: "Energy Transformer"
     authors: Benjamin Hoover*, Yuchen Liang*, <strong>Bao Pham*</strong>, Rameswar Panda, Hendrik Strobelt, Duen Horng Chau, Mohammed J. Zaki, Dmitry Krotov
+    conference_short: NeurIPS
+    conference: Neural Information Processing Systems <strong>(NeurIPS)</strong>, 2023.
+    page: /papers/energy-transformer/
     pdf: https://arxiv.org/abs/2302.07253
     code_jax: https://github.com/bhoov/energy-transformer-jax
     code_torch: https://github.com/Lemon-cmd/energy-transformer-torch
     slides: https://neurips.cc/virtual/2023/poster/71901
-    talk_1: https://www.youtube.com/watch?v=5LXiQUsnHrI
+    #talk_1: https://www.youtube.com/watch?v=5LXiQUsnHrI
     image: /assets/img/teaser_imgs/energy_transformer.png
 
   #- title: "HDR-GS: Efficient High Dynamic Range Novel View Synthesis at 1000x Speed via Gaussian Splatting"

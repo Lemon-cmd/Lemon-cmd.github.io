@@ -11,7 +11,7 @@ keywords: bao pham, pham bao, baopham, phambao
 canonical: https://bhqpham.com
 description: Bao is a Ph.D. student who works on energy-based modeling and Dense Associative Memory models.
 
-# The option is used to enable the Illinois template.
+# The option is used to enable the affiliation logo template.
 enable_hopkins_logo: false
 
 # The option is used to show the last update time.

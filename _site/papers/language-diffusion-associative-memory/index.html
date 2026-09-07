@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data</title>
+
+  <meta name="description" content="EMNLP 2026 (Main). Uniform-based discrete diffusion models behave as associative memories, and conditional entropy is a practical probe for their memorization-to-generalization transition.">
+  <meta name="keywords" content="language diffusion models, discrete diffusion, associative memory, Hopfield networks, memorization, generalization, conditional entropy, EMNLP 2026">
+  <link rel="canonical" href="https://bhqpham.com/papers/language-diffusion-associative-memory/" />
+
+  <meta property="og:title" content="Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data" />
+  <meta property="og:description" content="EMNLP 2026 (Main). Uniform-based discrete diffusion models behave as associative memories, and conditional entropy is a practical probe for their memorization-to-generalization transition." />
+  <meta property="og:url" content="https://bhqpham.com/papers/language-diffusion-associative-memory/" />
+  <meta property="og:image" content="https://bhqpham.com/assets/img/teaser_imgs/tweet_fig_1.png" />
+
+  <meta name="twitter:title" content="Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data">
+  <meta name="twitter:description" content="EMNLP 2026 (Main). Uniform-based discrete diffusion models behave as associative memories, and conditional entropy is a practical probe for their memorization-to-generalization transition.">
+  <meta name="twitter:image" content="https://bhqpham.com/assets/img/teaser_imgs/tweet_fig_1.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129504;</text></svg>">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/project-page/css/bulma.min.css">
+  <link rel="stylesheet" href="/assets/project-page/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="/assets/project-page/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css"
+    integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/project-page/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/assets/project-page/js/bulma-carousel.min.js"></script>
+  <script src="/assets/project-page/js/bulma-slider.min.js"></script>
+  <script src="/assets/project-page/js/index.js"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    .back-home {
+      font-family: 'Google Sans', sans-serif;
+      color: #4a4a4a;
+    }
+
+    .publication-teaser img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    #BibTeX pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item back-home" href="/">&larr; Bao Pham</a>
+    </div>
+  </nav>
+
+  <!-- Title / authors / links -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h1 class="title is-1 publication-title">Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data</h1>
+
+            <div class="is-size-5 publication-authors">
+              
+              <span class="author-block">
+                <a href="/">Bao Pham</a>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://www.cs.rpi.edu/~zaki/" target="_blank">Mohammed J. Zaki</a>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://www.ru.nl/en/people/ambrogioni-l" target="_blank">Luca Ambrogioni</a>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://dmitrykrotov.com" target="_blank">Dmitry Krotov</a>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://sites.google.com/view/matteonegriphysics" target="_blank">Matteo Negri</a>
+              </span>
+              
+            </div>
+
+            
+            <div class="is-size-5 publication-authors" style="margin-top: 0.75rem;">
+              <span class="author-block publication-venue">EMNLP 2026 (Main Conference)</span>
+              
+            </div>
+            
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2604.26841" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2604.26841" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://github.com/Lemon-cmd/Associative-Memory-and-Language-Diffusion" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- Teaser -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body publication-teaser">
+        <img src="/assets/img/teaser_imgs/tweet_fig_1.png" alt="Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data">
+        
+        <h2 class="subtitle has-text-centered" style="margin-top: 1.25rem;">
+          Corrupted tokens are fed to a uniform-based discrete diffusion model, which is then asked to recover them. When the training set is small, training examples are recovered token-for-token (memorization). As the training set grows, the basins around training examples shrink while basins around unseen test examples expand, until both converge to the same recovery level (generalization).
+        </h2>
+        
+      </div>
+    </div>
+  </section>
+  <!-- End teaser -->
+  
+
+  
+  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>When do language diffusion models memorize their training data, and how to quantitatively assess their true generative regime? We address these questions by showing that Uniform-based Discrete Diffusion Models (UDDMs) fundamentally behave as Associative Memories with emergent creative capabilities. The core idea of an AM is to reliably recover stored data points as memories by establishing distinct basins of attraction around them. Historically, models like Hopfield networks use an explicit energy function to guarantee these stable attractors. We broaden this perspective by leveraging the observation that energy is not strictly necessary, as basins of attraction can also be formed via conditional likelihood maximization. By evaluating token recovery of training and test examples, we identify in UDDMs a sharp memorization-to-generalization transition governed by the size of the training dataset: as it increases, basins around training examples shrink and basins around unseen test examples expand, until both later converge to the same level. Crucially, we can detect this transition using only the conditional entropy of predicted token sequences: memorization is characterized by vanishing conditional entropy, while in the generalization regime the conditional entropy of most tokens remains finite. Thus, conditional entropy offers a practical probe for the memorization-to-generalization transition in deployed models.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End abstract -->
+  
+
+  <!-- Page body -->
+  <section class="section">
+    <div class="container is-max-desktop content has-text-justified">
+      <h2 class="title is-3">Highlights</h2>
+
+<ul>
+  <li><strong>Language diffusion models are associative memories.</strong> Uniform-based discrete diffusion models (UDDMs) carve out basins of attraction around data points, recovering them from corrupted token sequences the way a Hopfield network recovers a stored pattern.</li>
+  <li><strong>Energy is not required for attractors.</strong> Stable attractors need not come from an explicit energy function; conditional likelihood maximization is enough to form basins of attraction.</li>
+  <li><strong>A sharp memorization-to-generalization transition, controlled by dataset size.</strong> As the training set grows, basins around training examples shrink and basins around <em>unseen test</em> examples expand, until training and test recovery converge — the model retrieves data it was never trained on.</li>
+  <li><strong>Conditional entropy is a practical probe.</strong> Memorization shows up as vanishing conditional entropy over predicted tokens, while generalization leaves the conditional entropy of most tokens finite. This needs no access to the training set, so it can be applied to deployed models.</li>
+</ul>
+
+<h2 class="title is-3" style="margin-top: 2.5rem;">No Need For Energy: The Product of Pseudo-likelihood</h2>
+
+<p>Classical Associative Memories, and even their modern variants, rely on well-defined and explicit energy functions to define their attractors. Specifically, Hopfield networks and Dense Associative Memories define a functional \(E_\theta(x)\) whose local minima sit at the stored patterns. Because the retrieval dynamics descend \(E_\theta\), and \(E_\theta\) is bounded below and non-increasing along the trajectory, convergence to a fixed point is guaranteed. The energy is what certifies that the basins exist. However, in the discrete setting, we can no longer rely on energy functions because things are no longer continuously differentiable. In our paper, we show that in the simplest setting of pseudo-likelihood, involving spins, a simple model trained with this objective shows the same behaviour as a language diffusion model when it comes to token recovery.</p>
+
+<figure class="image" style="margin: 2rem 0 0 0;">
+  <img src="/assets/img/teaser_imgs/energy_tweet.png" alt="Basins of attraction can be established via conditional likelihood maximization without relying on an explicit and well-defined energy function" style="border-radius: 10px;" />
+  <figcaption class="has-text-centered is-size-6" style="margin-top: 1rem; color: #4a4a4a;">
+    Maximizing the conditional likelihood of a spin given the rest of the sequence yields a Hebbian
+    update modulated by a margin-dependent penalty. Because stability no longer rests on descending an
+    energy, the weight matrix need not be symmetric for stored patterns to remain stable — basins of
+    attraction still form around the data points.
+  </figcaption>
+</figure>
+
+<h2 class="title is-3" style="margin-top: 2.5rem;">Associative Memory Metric Aligns with Standard Metric</h2>
+
+<p>Token recovery is the metric native to Associative Memory. Corrupt a sequence, let the model settle, and count how much of the original comes back; what this measures is the width of the basin around that sequence. Perplexity is the metric the language modelling community already reports. The two come from different traditions and measure different things, yet they mark the same event. The peak in perplexity (top row, coloured dashed line) falls at the dataset size where the recovery curves part ways (bottom row, grey dashed line): training recovery leaves its plateau at 100% while test recovery begins to climb. The takeaway is that the Associative Memory picture is not an interpretation layered on top of language diffusion models, but something already visible in a quantity these models are routinely evaluated on.</p>
+
+<figure class="image" style="margin: 2rem 0 0 0;">
+  <img src="/assets/img/teaser_imgs/perplexity_combined.png" alt="Alignment of Perplexity and Token Recovery" style="border-radius: 10px;" />
+  <figcaption class="has-text-centered is-size-6" style="margin-top: 1rem; color: #4a4a4a;">
+    Alignment of Perplexity and Token Recovery Rate. During memorization, perplexity starts low and increases up to a point, where this point denotes the phase transition from memorization to generalization. As generalization is becoming dominant, perplexity decreases while the token recovery rate on training samples falls and the recovery rate of test samples increases.
+  </figcaption>
+</figure>
+
+<h2 class="title is-3" style="margin-top: 2.5rem;">Conditional Entropy Reveals Stable Tokens and Unstable Tokens</h2>
+
+<p>Token recovery tells us whether a basin exists, but measuring it requires the original data, since we have to know what the model was supposed to produce. Conditional entropy asks something far cheaper: how peaked is the model’s own predictive distribution over each token? As it turns out, the two questions have the same answer. Tokens that the model recovers sit at vanishing conditional entropy, the signature of a token pinned to the bottom of a basin, while the tokens it fails to recover spread across a broad band of finite entropy. Memorization is therefore visible in the entropy alone: a model that has stored its training data predicts that data with almost no uncertainty. Because this measurement needs nothing but the model’s own predictions, it can be run on a deployed model whose training set we cannot inspect.</p>
+
+<figure class="image" style="margin: 2rem 0 0 0;">
+  <img src="/assets/img/teaser_imgs/unrecovered_recovered_ce.png" alt="Token conditional entropy separates recovered from unrecovered tokens across model sizes" style="border-radius: 10px;" />
+  <figcaption class="has-text-centered is-size-6" style="margin-top: 1rem; color: #4a4a4a;">
+    <strong>(A)</strong> A training example is perturbed (orange) and handed back to the model. Trained on a
+    small dataset, the model recovers the original tokens exactly (red); trained on the large dataset, most of
+    those same tokens are no longer recovered (blue), as the basin around this training example has shrunk.
+    <strong>(B)</strong> Densities of token conditional entropy on the full training set, split by whether a
+    token was recovered, for the Tiny (~24M), Small (~135M), and Medium (~384M) models. Recovered tokens pile
+    up at vanishing conditional entropy, while unrecovered tokens spread across a broad band of finite entropy.
+    Separating the two requires only the model's own predictions and no access to the training set, which is
+    what makes conditional entropy a usable probe on deployed models.
+  </figcaption>
+</figure>
+
+<h2 class="title is-3" style="margin-top: 2.5rem;">Related Work</h2>
+
+<p>This paper extends the memorization-to-generalization picture developed for continuous diffusion models in
+<a href="https://arxiv.org/abs/2505.21777">Memorization to Generalization: Emergence of Diffusion Models from Associative Memory</a>
+to the discrete, token-level setting. For background on the associative memory tools used here, see
+<a href="https://arxiv.org/abs/2507.06211">Modern Methods in Associative Memory</a> and my
+<a href="/research/2025/12/15/ebm.html">blog post on energy-based modeling</a>.</p>
+
+    </div>
+  </section>
+  <!-- End page body -->
+
+  
+  <!-- BibTeX citation -->
+  <section class="section hero is-light" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">
+        BibTeX
+        <button id="copyBibtex" class="button is-small is-dark is-pulled-right">Copy</button>
+      </h2>
+      <pre><code id="bibtexCitation">@article{pham2026language,
+  title={Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data},
+  author={Pham, Bao and Zaki, Mohammed J and Ambrogioni, Luca and Krotov, Dmitry and Negri, Matteo},
+  journal={arXiv preprint arXiv:2604.26841},
+  year={2026}
+}</code></pre>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('copyBibtex')
+      const code = document.getElementById('bibtexCitation')
+      if (btn && code) {
+        btn.addEventListener('click', () => {
+          navigator.clipboard.writeText(code.innerText.trim())
+          btn.textContent = 'Copied'
+          setTimeout(() => { btn.textContent = 'Copy' }, 1500)
+        })
+      }
+    })
+  </script>
+  <!-- End BibTeX citation -->
+  
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              You are free to borrow the source code of this website, we just ask that you link back to this page in the
+              footer. <br> This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

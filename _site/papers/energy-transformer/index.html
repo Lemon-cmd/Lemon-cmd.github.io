@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Energy Transformer</title>
+
+  <meta name="description" content="NeurIPS 2023. A transformer whose attention layers are designed to minimize an engineered energy function, bringing attention, energy-based models, and Dense Associative Memory into a single architecture.">
+  <meta name="keywords" content="energy transformer, attention, energy-based models, Dense Associative Memory, modern Hopfield networks, image completion, graph anomaly detection, NeurIPS 2023">
+  <link rel="canonical" href="https://bhqpham.com/papers/energy-transformer/" />
+
+  <meta property="og:title" content="Energy Transformer" />
+  <meta property="og:description" content="NeurIPS 2023. A transformer whose attention layers are designed to minimize an engineered energy function, bringing attention, energy-based models, and Dense Associative Memory into a single architecture." />
+  <meta property="og:url" content="https://bhqpham.com/papers/energy-transformer/" />
+  <meta property="og:image" content="https://bhqpham.com/assets/img/teaser_imgs/energy_transformer.png" />
+
+  <meta name="twitter:title" content="Energy Transformer">
+  <meta name="twitter:description" content="NeurIPS 2023. A transformer whose attention layers are designed to minimize an engineered energy function, bringing attention, energy-based models, and Dense Associative Memory into a single architecture.">
+  <meta name="twitter:image" content="https://bhqpham.com/assets/img/teaser_imgs/energy_transformer.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129504;</text></svg>">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/project-page/css/bulma.min.css">
+  <link rel="stylesheet" href="/assets/project-page/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="/assets/project-page/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css"
+    integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/project-page/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/assets/project-page/js/bulma-carousel.min.js"></script>
+  <script src="/assets/project-page/js/bulma-slider.min.js"></script>
+  <script src="/assets/project-page/js/index.js"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    .back-home {
+      font-family: 'Google Sans', sans-serif;
+      color: #4a4a4a;
+    }
+
+    .publication-teaser img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    #BibTeX pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item back-home" href="/">&larr; Bao Pham</a>
+    </div>
+  </nav>
+
+  <!-- Title / authors / links -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h1 class="title is-1 publication-title">Energy Transformer</h1>
+
+            <div class="is-size-5 publication-authors">
+              
+              <span class="author-block">
+                <a href="https://bhoov.com" target="_blank">Benjamin Hoover</a><sup>*</sup>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=yVhSIBcAAAAJ&hl=en" target="_blank">Yuchen Liang</a><sup>*</sup>,
+              </span>
+              
+              <span class="author-block">
+                <a href="/">Bao Pham</a><sup>*</sup>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://rpand002.github.io/" target="_blank">Rameswar Panda</a>,
+              </span>
+              
+              <span class="author-block">
+                <a href="http://hendrik.strobelt.com" target="_blank">Hendrik Strobelt</a>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://faculty.cc.gatech.edu/~dchau/" target="_blank">Duen Horng Chau</a>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://www.cs.rpi.edu/~zaki/" target="_blank">Mohammed J. Zaki</a>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://dmitrykrotov.com" target="_blank">Dmitry Krotov</a>
+              </span>
+              
+            </div>
+
+            
+            <div class="is-size-5 publication-authors" style="margin-top: 0.75rem;">
+              <span class="author-block publication-venue">NeurIPS 2023</span>
+              <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
+            </div>
+            
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2302.07253" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2302.07253" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://github.com/bhoov/energy-transformer-jax" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code (JAX)</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://github.com/Lemon-cmd/energy-transformer-torch" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code (PyTorch)</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://neurips.cc/virtual/2023/poster/71901" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-chalkboard-user"></i></span>
+                    <span>NeurIPS</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=5LXiQUsnHrI" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-youtube"></i></span>
+                    <span>Talk</span>
+                  </a>
+                </span>
+                
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- Teaser -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body publication-teaser">
+        <img src="/assets/img/teaser_imgs/energy_transformer.png" alt="Energy Transformer">
+        
+        <h2 class="subtitle has-text-centered" style="margin-top: 1.25rem;">
+          A single Energy Transformer block is applied recurrently, and each pass updates the token representations by descending the engineered energy, so the forward pass is an optimization rather than a stack of distinct layers. The energy decreases monotonically until the tokens settle at a fixed point. The same block handles graphs (top) and image completion (bottom), where masked patches are filled in as the energy is minimized.
+        </h2>
+        
+      </div>
+    </div>
+  </section>
+  <!-- End teaser -->
+  
+
+  
+  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>Our work combines aspects of three promising paradigms in machine learning, namely, attention mechanism, energy-based models, and associative memory. Attention is the power-house driving modern deep learning successes, but it lacks clear theoretical foundations. Energy-based models allow a principled approach to discriminative and generative tasks, but the design of the energy functional is not straightforward. At the same time, Dense Associative Memory models or Modern Hopfield Networks have a well-established theoretical foundation, and allow an intuitive design of the energy function. We propose a novel architecture, called the Energy Transformer (or ET for short), that uses a sequence of attention layers that are purposely designed to minimize a specifically engineered energy function, which is responsible for representing the relationships between the tokens. In this work, we introduce the theoretical foundations of ET, explore its empirical capabilities using the image completion task, and obtain strong quantitative results on the graph anomaly detection and graph classification tasks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End abstract -->
+  
+
+  <!-- Page body -->
+  <section class="section">
+    <div class="container is-max-desktop content has-text-justified">
+      <h2 class="title is-3">Highlights</h2>
+
+<ul>
+  <li><strong>Attention that descends an energy.</strong> ET’s attention layers are not designed first and explained later. They are derived as the gradient of a specifically engineered energy function, so a forward pass through the network is literally energy minimization.</li>
+  <li><strong>One block, applied recurrently.</strong> Rather than stacking distinct layers, ET applies a single block repeatedly, and the token representations follow the update \(\mathbf{x}^{t+1} = \mathbf{x}^{t} - \alpha \nabla_{\mathbf{g}} E^{t}\) until the energy converges.</li>
+  <li><strong>An interpretable system that converges.</strong> Every update is the gradient of a scalar energy, so each module’s contribution can be decoded back into the input space and inspected at any step. Because the energy is non-increasing along the trajectory, those updates shrink and the tokens settle at a fixed point, rather than merely stopping after a fixed depth.</li>
+  <li><strong>A bridge between three traditions.</strong> Attention supplies the empirical power, energy-based models supply the principled objective, and Dense Associative Memory supplies a well-founded recipe for designing the energy itself.</li>
+  <li><strong>Works across modalities.</strong> The same architecture completes masked image patches and delivers strong quantitative results on graph anomaly detection and graph classification.</li>
+</ul>
+
+<h2 class="title is-3" style="margin-top: 2.5rem;">Attention as the Gradient of an Energy</h2>
+
+<p>A single block holds two modules that read the same layer-normalized tokens. Energy Attention contributes a term that is low when queries align with keys, so attention here is not a hand-designed operation but a summand in the energy. The Hopfield Network contributes a second term that is low when tokens resemble the stored memory vectors, which is what makes the tokens behave like memories. Their sum, \(E = E^{\text{ATT}} + E^{\text{HN}}\), is the entire objective, and the block updates the tokens by descending its gradient, either in continuous time or in discrete steps of size \(\alpha\). Because both terms are differentiable scalars, the resulting implementation is short: the update is nothing more than automatic differentiation of the energy.</p>
+
+<figure class="image" style="margin: 2rem 0 0 0;">
+  <img src="/assets/img/teaser_imgs/et_general.png" alt="The Energy Transformer block, its two energy terms, and the gradient descent update on their sum" style="border-radius: 10px;" />
+  <figcaption class="has-text-centered is-size-6" style="margin-top: 1rem; color: #4a4a4a;">
+    <strong>Top.</strong> Layer-normalized tokens are read by two modules. Energy Attention makes queries align
+    with keys in the latent space, and the Hopfield Network makes tokens look like memories. The Energy
+    Transformer minimizes the sum of the two energies. <strong>Bottom.</strong> Each token descends the total
+    energy gradient, either as a continuous flow or in discrete steps of size &alpha;. Since the energy is a
+    differentiable scalar, an implementation is a few lines of autodiff.
+  </figcaption>
+</figure>
+
+<h2 class="title is-3" style="margin-top: 2.5rem;">An Interpretable System That Converges</h2>
+
+<p>Because every update is the gradient of an energy, the contribution of each module can be decoded back into the input space and simply looked at. The figure follows one image completion across the descent, where at each step the token state receives a Hopfield Network update and an Energy Attention update, and each can be rendered on its own. Early in the descent the two updates are large and coarse as they rough in the masked patches. Late in the descent they have shrunk and the reconstruction has stopped changing, which is what convergence looks like from the outside: the energy has flattened and the tokens have settled at a fixed point.</p>
+
+<figure class="image" style="margin: 2rem 0 0 0;">
+  <img src="/assets/img/teaser_imgs/interp_thru_time.png" alt="Hopfield Network and Energy Attention updates decoded into image space at an early and a late step of the descent" style="border-radius: 10px;" />
+  <figcaption class="has-text-centered is-size-6" style="margin-top: 1rem; color: #4a4a4a;">
+    One image completion viewed across the descent. At every step the token state is updated by the sum of the
+    Hopfield Network update and the Energy Attention update, and each contribution can be decoded back into
+    image space on its own. At an early time <em>s</em> the updates are large and coarse; by a late time
+    <em>t</em> they have shrunk and the reconstruction has stopped changing, as the tokens settle into a fixed
+    point of the energy.
+  </figcaption>
+</figure>
+
+<h2 class="title is-3" style="margin-top: 2.5rem;">Related Work</h2>
+
+<p>The Associative Memory foundations that ET is built on are surveyed in
+<a href="https://arxiv.org/abs/2507.06211">Modern Methods in Associative Memory</a>, and the same energy-based
+perspective is applied to generative models in
+<a href="https://arxiv.org/abs/2505.21777">Memorization to Generalization: Emergence of Diffusion Models from Associative Memory</a>
+and <a href="/papers/language-diffusion-associative-memory/">Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data</a>.
+For background, see my <a href="/research/2025/12/15/ebm.html">blog post on energy-based modeling</a>.</p>
+
+    </div>
+  </section>
+  <!-- End page body -->
+
+  
+  <!-- BibTeX citation -->
+  <section class="section hero is-light" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">
+        BibTeX
+        <button id="copyBibtex" class="button is-small is-dark is-pulled-right">Copy</button>
+      </h2>
+      <pre><code id="bibtexCitation">@inproceedings{hoover2023energy,
+  title={Energy Transformer},
+  author={Hoover, Benjamin and Liang, Yuchen and Pham, Bao and Panda, Rameswar and Strobelt, Hendrik and Chau, Duen Horng and Zaki, Mohammed J and Krotov, Dmitry},
+  booktitle={Advances in Neural Information Processing Systems (NeurIPS)},
+  year={2023}
+}</code></pre>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('copyBibtex')
+      const code = document.getElementById('bibtexCitation')
+      if (btn && code) {
+        btn.addEventListener('click', () => {
+          navigator.clipboard.writeText(code.innerText.trim())
+          btn.textContent = 'Copied'
+          setTimeout(() => { btn.textContent = 'Copy' }, 1500)
+        })
+      }
+    })
+  </script>
+  <!-- End BibTeX citation -->
+  
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              You are free to borrow the source code of this website, we just ask that you link back to this page in the
+              footer. <br> This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

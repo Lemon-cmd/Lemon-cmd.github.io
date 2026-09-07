@@ -48,25 +48,113 @@ bibtex: |
 
 - **Language diffusion models are associative memories.** Uniform-based discrete diffusion models (UDDMs) carve out basins of attraction around data points, recovering them from corrupted token sequences the way a Hopfield network recovers a stored pattern.
 - **Energy is not required for attractors.** Stable attractors need not come from an explicit energy function; conditional likelihood maximization is enough to form basins of attraction.
-- **A sharp memorization-to-generalization transition, controlled by dataset size.** As the training set grows, basins around training examples shrink and basins around *unseen test* examples expand, until training and test recovery converge — the model retrieves data it was never trained on.
+- **Generalization allows effective token recovery for unseen test sequences.** As the training set grows, basins around training examples shrink and basins around *unseen test* examples expand, until training and test recovery converge — the model retrieves data it was never trained on.
 - **Conditional entropy is a practical probe.** Memorization shows up as vanishing conditional entropy over predicted tokens, while generalization leaves the conditional entropy of most tokens finite. This needs no access to the training set, so it can be applied to deployed models.
 
-<h2 class="title is-3" style="margin-top: 2.5rem;">No Need For Energy: The Product of Pseudo-likelihood</h2>
+<h2 class="title is-3" style="margin-top: 2.5rem;">No Need For Energy via Pseudo-likelihood</h2>
 
-Classical Associative Memories, and even their modern variants, rely on well-defined and explicit energy functions to define their attractors. Specifically, Hopfield networks and Dense Associative Memories define a functional $$E_\theta(x)$$ whose local minima sit at the stored patterns. Because the retrieval dynamics descend $$E_\theta$$, and $$E_\theta$$ is bounded below and non-increasing along the trajectory, convergence to a fixed point is guaranteed. The energy is what certifies that the basins exist. However, in the discrete setting, we can no longer rely on energy functions because things are no longer continuously differentiable. In our paper, we show that in the simplest setting of pseudo-likelihood, involving spins, a simple model trained with this objective shows the same behaviour as a language diffusion model when it comes to token recovery.
+Classical Associative Memories, and even their modern variants, rely on well-defined and explicit energy functions to define their attractors. Specifically, Hopfield networks and Dense Associative Memories define a functional $$E_\theta(x)$$ whose local minima sit at the stored patterns. Because the retrieval dynamics minimizes the energy, and $$E_\theta$$ is bounded below and non-increasing along the trajectory, convergence to a fixed point is guaranteed. 
+
+The energy is what certifies that the basins exist. However, in the discrete setting, we can no longer rely on energy functions because things are no longer continuously differentiable. In our paper, we show that in the simplest setting of pseudo-likelihood, involving spins, a simple model trained with this objective shows the same behaviour as a language diffusion model when it comes to token recovery.
 
 <figure class="image" style="margin: 2rem 0 0 0;">
   <img src="/assets/img/teaser_imgs/energy_tweet.png"
        alt="Basins of attraction can be established via conditional likelihood maximization without relying on an explicit and well-defined energy function"
-       style="border-radius: 10px;">
+       style="border-radius: 10px; width: 80%; display: block; margin: 0 auto;">
   <figcaption class="has-text-centered is-size-6" style="margin-top: 1rem; color: #4a4a4a;">
     Maximizing the conditional likelihood of a spin given the rest of the sequence yields a Hebbian
-    update modulated by a margin-dependent penalty. Because stability no longer rests on descending an
-    energy, the weight matrix need not be symmetric for stored patterns to remain stable — basins of
-    attraction still form around the data points.
+    update modulated by a margin-dependent penalty. Because stability no longer rests on descending an energy, the weight matrix need not be symmetric for stored patterns to remain stable — basins of attraction still form around the data points.
   </figcaption>
 </figure>
 
+<h3 class="title is-5" style="margin-top: 2rem;">A Minimal Setting</h3>
+
+Take $$L$$ binary neurons $$\mathbf{s}^\ell \in \{\pm 1\}$$ coupled by a matrix $$\mathbf{W} \in \mathbb{R}^{L \times L}$$ with zero diagonal, so that no position attends to itself, and let the state evolve by the deterministic rule
+
+$$
+\mathbf{s}^\ell_\tau = \mathrm{sgn} \bigg( \sum^L_{m=1} \mathbf{W}^{\ell m} \, \mathbf{s}^m_{\tau+1} \bigg),
+$$
+
+where the discrete time $$\tau$$ runs backwards, to mirror the reverse process of a diffusion model. Now take a dataset of $$P$$ examples $$\boldsymbol{\Xi} \in \{\pm 1\}^{P \times L}$$. Making every data example $$\forall \mathbf{x}^{1: L} \in \boldsymbol{\Xi}$$ a fixed point of this rule is not enough, because a fixed point on its own carries no basin around it. What is needed is the stronger condition
+
+$$
+\mathbf{x}^\ell = \mathrm{sgn} \bigg( \sum^L_{m=1} \mathbf{W}^{\ell m} \mathbf{x}^m + \kappa \bigg), \qquad \forall \, \ell = 1, \dots, L,
+$$
+
+where the classification margin $$\kappa \in \mathbb{R}^+$$ makes each fixed point robust to a finite number of flipped variables. A larger $$\kappa$$ means a wider basin, and at load $$\gamma = P/L$$ there is a maximum achievable margin $$\kappa_{\mathrm{max}}(\gamma)$$.
+
+<h3 class="title is-5" style="margin-top: 2rem;">Conditional Sampling</h3>
+
+The same update can be read as selecting the most probable state under a conditional distribution,
+
+$$
+\mathbf{s}^\ell_\tau = \operatorname*{arg\,max}_{\mathbf{s}^\ell} \, \psi_{\tau | \tau+1} \big( \mathbf{s}^\ell_\tau \mid \mathbf{s}^{1:L}_{\tau+1}; \mathbf{W}^\ell \big),
+$$
+
+where
+
+$$
+\psi_{\tau | \tau+1}(\mathbf{s}^\ell_\tau \mid \mathbf{s}^{1:L}_{\tau+1}; \mathbf{W}^\ell) = \frac{\exp \big( \mathbf{s}^\ell_\tau f^\ell_{\mathbf{W}}(\mathbf{s}^{1:L}_{\tau+1}) \big)}{2 \cosh \big( f^\ell_{\mathbf{W}}(\mathbf{s}^{1:L}_{\tau+1}) \big)}, \qquad f^\ell_{\mathbf{W}}(\mathbf{s}^{1:L}) = \beta \sum^L_{m=1} \mathbf{W}^{\ell m} \mathbf{s}^m .
+$$
+
+For binary variables this is logistic. For categorical variables the $$f^\ell$$ become logits inside a softmax, which is exactly the per-position conditional a language diffusion model produces, and those same conditionals are what the cross-entropy terms of the NELBO objective act on.
+
+<h3 class="title is-5" style="margin-top: 2rem;">Pseudo-likelihood Maximizes the Margins</h3>
+
+This suggests how to train the couplings: minimize the negative log conditional likelihood, otherwise known as the pseudo-likelihood,
+
+$$
+\mathcal{L}(\mathbf{W}) = -\frac{1}{P} \sum_{\mathbf{x} \in \boldsymbol{\Xi}} \sum^L_{\ell=1} \Big[ \mathbf{x}^\ell f^\ell_{\mathbf{W}}(\mathbf{x}^{1:L}) - \log 2 \cosh \big( f^\ell_{\mathbf{W}}(\mathbf{x}^{1:L}) \big) \Big].
+$$
+
+Differentiating with respect to the couplings shows why this builds basins rather than bare fixed points:
+
+$$
+\frac{\mathrm{d}\, \mathcal{L}(\mathbf{W})}{\mathrm{d}\, \mathbf{W}^{\ell m}} \propto -\frac{1}{P} \sum_{\mathbf{x} \in \boldsymbol{\Xi}} \underbrace{\mathbf{x}^\ell \mathbf{x}^m}_{\text{Hebbian}} \Big[ \underbrace{1 - \tanh \big( M^\ell(\mathbf{x}^{1:L}) \big)}_{\text{Penalty}} \Big],
+$$
+
+where $$M^\ell(\mathbf{x}^{1:L}) = \mathbf{x}^\ell f^\ell_{\mathbf{W}}(\mathbf{x}^{1:L})$$ is the local classification margin. The first factor is ordinary Hebbian storage. The second is a penalty, $$1 - \tanh(M^\ell) \approx 2 e^{-2 M^\ell}$$, which decays exponentially once a pattern is classified with a wide margin. Learning therefore concentrates on whichever patterns have the smallest margins, and the objective is minimized when every margin is as large as it can be.
+
+Two things follow. The couplings $$\mathbf{W}$$ were never required to be symmetric, so no global energy function is needed anywhere in this construction; the attractor behaviour comes out of the structure of the conditional probabilities alone. And numerically, the basin shrinkage we report for UDDMs shows up in this simple spin model as well, which says the Associative Memory behaviour does not come from the Negative ELBO objective but from the conditional-likelihood structure sitting underneath it.
+
+
+
+<h3 class="title is-5" style="margin-top: 2rem;">Pseudo-likelihood Is the Reconstruction Term</h3>
+
+The spin model is a toy, but the objective it is trained on is not far from the one a UDDM actually optimizes. Written in its original form, the pseudo-likelihood is a sum of negative log per-position conditionals,
+
+$$
+\mathcal{L}(\mathbf{W}) = -\frac{1}{P} \sum_{\mathbf{x} \in \boldsymbol{\Xi}} \log \prod^L_{\ell=1} \psi \big( \mathbf{x}^\ell \mid \mathbf{x}^{1:L}; \mathbf{W}^\ell \big),
+$$
+
+while a UDDM is trained on the Negative ELBO, which splits into three pieces,
+
+$$
+\mathcal{L}_{\text{NELBO}} = \mathbb{E}_q \big[ \mathcal{L}_{\text{reconstruction}} + \mathcal{L}_{\text{diffusion}} + \mathcal{L}_{\text{prior}} \big],
+$$
+
+whose first piece, given the same factorization of the denoising process across positions, is
+
+$$
+\mathcal{L}_{\text{reconstruction}} = - \log p_\theta \big( \mathbf{x}^{1:L} \mid \mathbf{z}_0^{1:L} \big) = - \sum^L_{\ell=1} \log \psi^\theta \big( \mathbf{x}^\ell \mid \mathbf{z}_0^{1:L} \big).
+$$
+
+
+These are the same object. Both sum negative log conditionals over positions, and both push up the margin of each token against the rest of its sequence. The differences are narrow: the spin model conditions on the clean sequence itself and holds the inverse temperature $$\beta$$ fixed, as Associative Memories traditionally do, whereas the reconstruction term conditions on the least-noised state $$\mathbf{z}_0$$ and inherits a schedule $$\beta(t)$$ that is annealed over the reverse process. Read this way, reverse diffusion is stochastic Associative Memory retrieval over categorical variables, run with an annealed temperature, exactly as in the continuous setting.
+
+
+<figure class="image" style="margin: 2rem 0 0 0;">
+  <img src="/assets/img/teaser_imgs/tweet_fig3.png"
+       alt="Basins of attraction can be established via conditional likelihood maximization without relying on an explicit and well-defined energy function"
+       style="border-radius: 10px; width: 90%; display: block; margin: 0 auto;">
+  <figcaption class="has-text-centered is-size-6" style="margin-top: 1rem; color: #4a4a4a;">
+    As data scales, the model’s ability to flawlessly recover training examples drops (indicating shrinking basins); while its recovery rate of unseen test examples improves (indicating expanding basins). The convergence of these rates at large training set sizes (red curves) marks the transition from memorization to generalization.
+  </figcaption>
+</figure>
+
+<br>
+
+That leaves $$\mathcal{L}_{\text{diffusion}}$$ and $$\mathcal{L}_{\text{prior}}$$, which have no counterpart in the Associative Memory objective. Our suspicion is that they serve to enlarge the basins once the conditionals are parametrized by a deep architecture like a transformer, rather than by a single coupling matrix, but we leave that question to future work.
 
 <h2 class="title is-3" style="margin-top: 2.5rem;">Associative Memory Metric Aligns with Standard Metric</h2>
 
@@ -94,7 +182,7 @@ Token recovery tells us whether a basin exists, but measuring it requires the or
     small dataset, the model recovers the original tokens exactly (red); trained on the large dataset, most of
     those same tokens are no longer recovered (blue), as the basin around this training example has shrunk.
     <strong>(B)</strong> Densities of token conditional entropy on the full training set, split by whether a
-    token was recovered, for the Tiny (~24M), Small (~135M), and Medium (~384M) models. Recovered tokens pile
+    token was recovered for various UDDM sizes. Recovered tokens pile
     up at vanishing conditional entropy, while unrecovered tokens spread across a broad band of finite entropy.
     Separating the two requires only the model's own predictions and no access to the training set, which is
     what makes conditional entropy a usable probe on deployed models.

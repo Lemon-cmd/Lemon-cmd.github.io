@@ -12,6 +12,7 @@ main:
     code: https://tutorial.amemory.net/
     talk_1: https://slideslive.com/39043831/modern-methods-in-associative-memory
     image: /assets/img/teaser_imgs/toy_example.png
+    page: https://tutorial.amemory.net
 
   - title: "Memorization to Generalization: Emergence of Diffusion Models from Associative Memory"
     authors: <strong>Bao Pham*</strong>, Gabriel Raya*, Matteo Negri, Mohammed J. Zaki, Luca Ambrogioni, Dmitry Krotov

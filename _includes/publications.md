@@ -1,23 +1,24 @@
 <h1 id="publications"></h1>
 
-<h2 style="margin: 60px 0px -15px;">Selected Works <temp style="font-size:22px;">(* denotes Equal Contribution)</temp><temp style="font-size:22px;"></temp></h2>
+<h2 style="margin: 60px 0px -15px; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;"><span>Selected Works</span><span style="font-size: 15px; font-weight: 400; color: #828282;">(*&nbsp;denotes equal contribution)</span></h2>
 
 
 <div class="publications">
 <ol class="bibliography">
 
 {% for link in site.data.publications.main %}
+{% assign target = link.page | default: link.pdf %}
 
 <li>
 <div class="pub-row">
   <div class="col-sm-3 abbr" style="position: relative;padding-right: 15px;padding-left: 15px;">
-    <img src="{{ link.image }}" class="teaser img-fluid z-depth-1" style="width=100;height=40%">
+    <a href="{{ target }}"><img src="{{ link.image }}" class="teaser img-fluid z-depth-1" style="width=100;height=40%"></a>
             {% if link.conference_short %}
             <abbr class="badge">{{ link.conference_short }}</abbr>
             {% endif %}
   </div>
   <div class="col-sm-9" style="position: relative;padding-right: 15px;padding-left: 20px;">
-      <div class="title"><a href="{% if link.page %}{{ link.page }}{% else %}{{ link.pdf }}{% endif %}">{{ link.title }}</a></div>
+      <div class="title"><a href="{{ target }}">{{ link.title }}</a></div>
       <div class="author">{{ link.authors }}</div>
       <div class="periodical"><em>{{ link.conference }}</em>
       </div>

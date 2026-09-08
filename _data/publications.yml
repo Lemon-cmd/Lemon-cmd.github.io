@@ -1,4 +1,11 @@
 main:
+  - title: "ARCHER: Amortized Cross-specimen Pose Estimation for Cryo-electron Microscopy"
+    authors: Nhan Nguyen, <strong>Bao Pham</strong>
+    page: /papers/archer/
+    pdf: https://arxiv.org/abs/2608.22029v1
+    code: https://github.com/ndnng/ARCHER
+    image: /assets/img/teaser_imgs/archer_contrast.png
+
   - title: "Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data"
     authors: <strong>Bao Pham</strong>, Mohammed J. Zaki, Luca Ambrogioni, Dmitry Krotov, Matteo Negri
     page: /papers/language-diffusion-associative-memory/

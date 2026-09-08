@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ARCHER: Amortized Cross-specimen Pose Estimation for Cryo-electron Microscopy</title>
+
+  <meta name="description" content="A reference-conditioned pose estimator for single-particle cryo-EM, trained once across 3,330 structures and applied zero-shot to specimens it has never seen.">
+  <meta name="keywords" content="cryo-EM, cryo-electron microscopy, pose estimation, amortized inference, contrastive learning, SO(3), conformational heterogeneity, ARCHER">
+  <link rel="canonical" href="https://bhqpham.com/papers/archer/" />
+
+  <meta property="og:title" content="ARCHER: Amortized Cross-specimen Pose Estimation for Cryo-electron Microscopy" />
+  <meta property="og:description" content="A reference-conditioned pose estimator for single-particle cryo-EM, trained once across 3,330 structures and applied zero-shot to specimens it has never seen." />
+  <meta property="og:url" content="https://bhqpham.com/papers/archer/" />
+  <meta property="og:image" content="https://bhqpham.com/assets/img/teaser_imgs/archer_contrast.png" />
+
+  <meta name="twitter:title" content="ARCHER: Amortized Cross-specimen Pose Estimation for Cryo-electron Microscopy">
+  <meta name="twitter:description" content="A reference-conditioned pose estimator for single-particle cryo-EM, trained once across 3,330 structures and applied zero-shot to specimens it has never seen.">
+  <meta name="twitter:image" content="https://bhqpham.com/assets/img/teaser_imgs/archer_contrast.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129504;</text></svg>">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/project-page/css/bulma.min.css">
+  <link rel="stylesheet" href="/assets/project-page/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="/assets/project-page/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css"
+    integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/project-page/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/assets/project-page/js/bulma-carousel.min.js"></script>
+  <script src="/assets/project-page/js/bulma-slider.min.js"></script>
+  <script src="/assets/project-page/js/index.js"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    .back-home {
+      font-family: 'Google Sans', sans-serif;
+      color: #4a4a4a;
+    }
+
+    .publication-teaser img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    #BibTeX pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item back-home" href="/">&larr; Bao Pham</a>
+    </div>
+  </nav>
+
+  <!-- Title / authors / links -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h1 class="title is-1 publication-title">ARCHER: Amortized Cross-specimen Pose Estimation for Cryo-electron Microscopy</h1>
+
+            <div class="is-size-5 publication-authors">
+              
+              <span class="author-block">
+                Nhan D. Nguyen,
+              </span>
+              
+              <span class="author-block">
+                <a href="/">Bao Pham</a>
+              </span>
+              
+            </div>
+
+            
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2608.22029v1" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2608.22029v1" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://github.com/ndnng/ARCHER" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- Teaser -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body publication-teaser">
+        <img src="/assets/img/teaser_imgs/archer_contrast.png" alt="ARCHER: Amortized Cross-specimen Pose Estimation for Cryo-electron Microscopy">
+        
+        <h2 class="subtitle has-text-centered" style="margin-top: 1.25rem;">
+          (A) Isosurfaces for five CESPED targets, one row each: the deposited reference, the ARCHER reconstruction, and that reconstruction after cryoFM restoration. (B) Experimental particles embedded by principal component analysis, coloured by dataset. The specimens occupy distinguishable regions, and the separation is structural rather than instrumental. (C) Cosines between restoration displacement vectors. A restorer moves every map in nearly the same direction, whichever estimator produced it.
+        </h2>
+        
+      </div>
+    </div>
+  </section>
+  <!-- End teaser -->
+  
+
+  
+  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>Single-particle cryo-electronic microscopy (cryo-EM) pose estimation is traditionally solved anew for each dataset, where iterative refinement is done from scratch while the estimator learns to store the molecule in its weights. In this work, we show that pose inference is a generalizable, specimen-agnostic operation when conditioned explicitly on a reference volume. We introduce ARCHER, an amortized contrastive classifier that models the pose posterior over a discrete rotation grid. Trained across a variety of protein structures, it operates zero-shot without retraining per structure. This transferability is grounded in Fourier-space information mechanics, where all specimen dependence is captured by the reference structure's power spectrum and spatial extent. ARCHER achieves a median angular error of 5.0° on 100 held-out test structures and 2.5° on experimental particles, matching dedicated estimators within 0.16 Å in 3D reconstruction. Crucially, downstream conformational signal is preserved. The leading conformational coordinate correlates at 0.97 with deposited benchmarks, faithfully reconstructing free-energy basins and mobile domains. These results overall demonstrate that cryo-EM pose estimation can be generalized across different structures.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End abstract -->
+  
+
+  <!-- Page body -->
+  <section class="section">
+    <div class="container is-max-desktop content has-text-justified">
+      <h2 class="title is-3">Highlights</h2>
+
+<ul>
+  <li><strong>The reference is an argument, not a parameter.</strong> Every pose estimator evaluates the posterior \(p(\mathbf{R} \mid y, V)\). Existing methods absorb the volume \(V\) into their weights, so every new specimen needs its own training run. Supply \(V\) at inference instead, and what is left to learn is the match between a noisy projection and a candidate view under a known transfer function. That operation is set by the microscope, and is shared across specimens.</li>
+  <li><strong>One set of weights, applied zero-shot.</strong> Trained across \(3{,}330\) structures, ARCHER reaches \(5.0^\circ\) median angular error on \(100\) held-out structures and \(2.5^\circ\) on experimental particles, reconstructing within \(0.16\) Å of estimators fit to the specimen itself.</li>
+  <li><strong>A model fitted to one protein is at chance on the next.</strong> A per-specimen estimator scores \(3.9^\circ\) to \(8.8^\circ\) on the CESPED target it was fitted to, and \(80^\circ\) to \(135^\circ\) on the others, which is chance level. Fitting those four separately cost \(90.5\) single-GPU hours; ARCHER covers all four in one training run.</li>
+</ul>
+
+    </div>
+  </section>
+  <!-- End page body -->
+
+  
+  <!-- BibTeX citation -->
+  <section class="section hero is-light" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">
+        BibTeX
+        <button id="copyBibtex" class="button is-small is-dark is-pulled-right">Copy</button>
+      </h2>
+      <pre><code id="bibtexCitation">@article{nguyen2026archer,
+  title={ARCHER: Amortized cross-specimen pose estimation for cryo-electron microscopy},
+  author={Nguyen, Nhan and Pham, Bao},
+  journal={bioRxiv},
+  pages={2026--08},
+  year={2026},
+  publisher={Cold Spring Harbor Laboratory}
+}</code></pre>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('copyBibtex')
+      const code = document.getElementById('bibtexCitation')
+      if (btn && code) {
+        btn.addEventListener('click', () => {
+          navigator.clipboard.writeText(code.innerText.trim())
+          btn.textContent = 'Copied'
+          setTimeout(() => { btn.textContent = 'Copy' }, 1500)
+        })
+      }
+    })
+  </script>
+  <!-- End BibTeX citation -->
+  
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              You are free to borrow the source code of this website, we just ask that you link back to this page in the
+              footer. <br> This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

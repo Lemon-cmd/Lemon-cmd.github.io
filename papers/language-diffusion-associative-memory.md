@@ -1,6 +1,7 @@
 ---
 layout: paper
 title: "Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data"
+year: 2026
 permalink: /papers/language-diffusion-associative-memory/
 description: "EMNLP 2026 (Main). Uniform-based discrete diffusion models behave as associative memories, and conditional entropy is a practical probe for their memorization-to-generalization transition."
 keywords: "language diffusion models, discrete diffusion, associative memory, Hopfield networks, memorization, generalization, conditional entropy, EMNLP 2026"

@@ -11,6 +11,25 @@
   <meta name="keywords" content="cryo-EM, cryo-electron microscopy, pose estimation, amortized inference, contrastive learning, SO(3), conformational heterogeneity, ARCHER">
   <link rel="canonical" href="https://bhqpham.com/papers/archer/" />
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "ARCHER: Amortized Cross-specimen Pose Estimation for Cryo-electron Microscopy",
+    "name": "ARCHER: Amortized Cross-specimen Pose Estimation for Cryo-electron Microscopy",
+    "url": "https://bhqpham.com/papers/archer/",
+    "description": "A reference-conditioned pose estimator for single-particle cryo-EM, trained once across 3,330 structures and applied zero-shot to specimens it has never seen.",
+    "abstract": "Single-particle cryo-electronic microscopy (cryo-EM) pose estimation is traditionally solved anew for each dataset, where iterative refinement is done from scratch while the estimator learns to store the molecule in its weights. In this work, we show that pose inference is a generalizable, specimen-agnostic operation when conditioned explicitly on a reference volume. We introduce ARCHER, an amortized contrastive classifier that models the pose posterior over a discrete rotation grid. Trained across a variety of protein structures, it operates zero-shot without retraining per structure. This transferability is grounded in Fourier-space information mechanics, where all specimen dependence is captured by the reference structure's power spectrum and spatial extent. ARCHER achieves a median angular error of 5.0° on 100 held-out test structures and 2.5° on experimental particles, matching dedicated estimators within 0.16 Å in 3D reconstruction. Crucially, downstream conformational signal is preserved. The leading conformational coordinate correlates at 0.97 with deposited benchmarks, faithfully reconstructing free-energy basins and mobile domains. These results overall demonstrate that cryo-EM pose estimation can be generalized across different structures.",
+    "image": "https://bhqpham.com/assets/img/teaser_imgs/archer_contrast.png",
+    "datePublished": 2026,
+    
+    "author": [{"@type": "Person", "name": "Nhan D. Nguyen"}, {"@type": "Person", "name": "Bao Pham"}],
+    "sameAs": ["https://arxiv.org/pdf/2608.22029v1", "https://arxiv.org/abs/2608.22029v1", "https://github.com/ndnng/ARCHER"],
+    "isAccessibleForFree": true
+  }
+  </script>
+
+
   <meta property="og:title" content="ARCHER: Amortized Cross-specimen Pose Estimation for Cryo-electron Microscopy" />
   <meta property="og:description" content="A reference-conditioned pose estimator for single-particle cryo-EM, trained once across 3,330 structures and applied zero-shot to specimens it has never seen." />
   <meta property="og:url" content="https://bhqpham.com/papers/archer/" />

@@ -1,6 +1,7 @@
 ---
 layout: paper
 title: "Energy Transformer"
+year: 2023
 permalink: /papers/energy-transformer/
 description: "NeurIPS 2023. A transformer whose attention layers are designed to minimize an engineered energy function, bringing attention, energy-based models, and Dense Associative Memory into a single architecture."
 keywords: "energy transformer, attention, energy-based models, Dense Associative Memory, modern Hopfield networks, image completion, graph anomaly detection, NeurIPS 2023"

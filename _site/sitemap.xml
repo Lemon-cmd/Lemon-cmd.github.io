@@ -1,44 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
->
-
-<url>
- <loc>https://yaoyaoliu.cs.illinois.edu/</loc>
- <priority>1.0</priority>
- <lastmod>2024-08-01</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
- <loc>https://yaoyaoliu.cs.illinois.edu/publications/</loc>
- <priority>1.0</priority>
- <lastmod>2024-08-01</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
- <loc>https://yaoyaoliu.cs.illinois.edu/teaching/</loc>
- <priority>1.0</priority>
- <lastmod>2024-08-01</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
- <loc>https://yaoyaoliu.cs.illinois.edu/talks/</loc>
- <priority>1.0</priority>
- <lastmod>2024-08-01</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
- <loc>https://yaoyaoliu.cs.illinois.edu/services/</loc>
- <priority>1.0</priority>
- <lastmod>2024-08-01</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
+    <loc>http://localhost:4000/papers/archer/</loc>
+    <changefreq>monthly</changefreq>
+  </url><url>
+    <loc>http://localhost:4000/blog/</loc>
+    <changefreq>monthly</changefreq>
+  </url><url>
+    <loc>http://localhost:4000/papers/energy-transformer/</loc>
+    <changefreq>monthly</changefreq>
+  </url><url>
+    <loc>http://localhost:4000/</loc>
+    <changefreq>monthly</changefreq>
+  </url><url>
+    <loc>http://localhost:4000/papers/language-diffusion-associative-memory/</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://localhost:4000/research/2025/12/22/hn.html</loc>
+    <lastmod>2025-12-22T00:00:00-05:00</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://localhost:4000/software/2025/12/18/jax_intro.html</loc>
+    <lastmod>2025-12-18T00:00:00-05:00</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://localhost:4000/research/2025/12/15/ebm.html</loc>
+    <lastmod>2025-12-15T00:00:00-05:00</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

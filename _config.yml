@@ -9,6 +9,7 @@ email: phamb (at) rpi (dot) edu
 # Search Engine Optimization (SEO)
 keywords: bao pham, pham bao, baopham, phambao
 canonical: https://bhqpham.com
+url: https://bhqpham.com
 description: Bao is a Ph.D. student who works on energy-based modeling and Dense Associative Memory models.
 
 # The option is used to enable the affiliation logo template.
@@ -38,6 +39,11 @@ avatar: ./assets/img/headshot_white.png
 
 # The following files will be removed from the generated website.
 exclude:
+  # Pages inherited from the site template that still hold the original
+  # author's content. Delete these two lines once they are rewritten.
+  - talks.md
+  - services.md
+  - html_source_file
   - build.sh
   - Gemfile
   - Gemfile.lock

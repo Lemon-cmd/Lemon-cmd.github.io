@@ -1,6 +1,7 @@
 ---
 layout: paper
 title: "ARCHER: Amortized Cross-specimen Pose Estimation for Cryo-electron Microscopy"
+year: 2026
 permalink: /papers/archer/
 description: "A reference-conditioned pose estimator for single-particle cryo-EM, trained once across 3,330 structures and applied zero-shot to specimens it has never seen."
 keywords: "cryo-EM, cryo-electron microscopy, pose estimation, amortized inference, contrastive learning, SO(3), conformational heterogeneity, ARCHER"

@@ -11,6 +11,25 @@
   <meta name="keywords" content="language diffusion models, discrete diffusion, associative memory, Hopfield networks, memorization, generalization, conditional entropy, EMNLP 2026">
   <link rel="canonical" href="https://bhqpham.com/papers/language-diffusion-associative-memory/" />
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data",
+    "name": "Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data",
+    "url": "https://bhqpham.com/papers/language-diffusion-associative-memory/",
+    "description": "EMNLP 2026 (Main). Uniform-based discrete diffusion models behave as associative memories, and conditional entropy is a practical probe for their memorization-to-generalization transition.",
+    "abstract": "When do language diffusion models memorize their training data, and how to quantitatively assess their true generative regime? We address these questions by showing that Uniform-based Discrete Diffusion Models (UDDMs) fundamentally behave as Associative Memories with emergent creative capabilities. The core idea of an AM is to reliably recover stored data points as memories by establishing distinct basins of attraction around them. Historically, models like Hopfield networks use an explicit energy function to guarantee these stable attractors. We broaden this perspective by leveraging the observation that energy is not strictly necessary, as basins of attraction can also be formed via conditional likelihood maximization. By evaluating token recovery of training and test examples, we identify in UDDMs a sharp memorization-to-generalization transition governed by the size of the training dataset: as it increases, basins around training examples shrink and basins around unseen test examples expand, until both later converge to the same level. Crucially, we can detect this transition using only the conditional entropy of predicted token sequences: memorization is characterized by vanishing conditional entropy, while in the generalization regime the conditional entropy of most tokens remains finite. Thus, conditional entropy offers a practical probe for the memorization-to-generalization transition in deployed models.",
+    "image": "https://bhqpham.com/assets/img/teaser_imgs/tweet_fig_1.png",
+    "datePublished": 2026,
+    "publication": "EMNLP 2026 (Main Conference)",
+    "author": [{"@type": "Person", "name": "Bao Pham"}, {"@type": "Person", "name": "Mohammed J. Zaki", "url": "https://www.cs.rpi.edu/~zaki/"}, {"@type": "Person", "name": "Luca Ambrogioni", "url": "https://www.ru.nl/en/people/ambrogioni-l"}, {"@type": "Person", "name": "Dmitry Krotov", "url": "https://dmitrykrotov.com"}, {"@type": "Person", "name": "Matteo Negri", "url": "https://sites.google.com/view/matteonegriphysics"}],
+    "sameAs": ["https://arxiv.org/pdf/2604.26841", "https://arxiv.org/abs/2604.26841", "https://github.com/Lemon-cmd/Associative-Memory-and-Language-Diffusion"],
+    "isAccessibleForFree": true
+  }
+  </script>
+
+
   <meta property="og:title" content="Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data" />
   <meta property="og:description" content="EMNLP 2026 (Main). Uniform-based discrete diffusion models behave as associative memories, and conditional entropy is a practical probe for their memorization-to-generalization transition." />
   <meta property="og:url" content="https://bhqpham.com/papers/language-diffusion-associative-memory/" />

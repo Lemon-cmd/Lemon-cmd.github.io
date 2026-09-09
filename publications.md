@@ -1,6 +1,7 @@
 ---
 layout: null
 permalink: /publications/
+sitemap: false
 ---
 <!DOCTYPE html>
 <html>

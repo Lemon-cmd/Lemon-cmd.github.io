@@ -6,7 +6,7 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <meta name="description" content="{{ site.title }}">
+  <meta name="description" content="{{ site.description }}">
   <meta name="keywords" content="{{ site.keywords }}">
 
   <meta property="og:type" content="website">
@@ -22,6 +22,37 @@
   <meta name="twitter:image" content="{{ site.avatar }}">
 
   <link rel="canonical" href="{{site.canonical}}/" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": {{ site.title | jsonify }},
+    "url": {{ site.canonical | jsonify }},
+    "image": {{ site.canonical | append: "/assets/img/headshot_white.png" | jsonify }},
+    "jobTitle": {{ site.position | jsonify }},
+    "description": {{ site.description | jsonify }},
+    "affiliation": {
+      "@type": "Organization",
+      "name": "Rensselaer Polytechnic Institute",
+      "alternateName": {{ site.affiliation | jsonify }},
+      "url": {{ site.affiliation_link | jsonify }}
+    },
+    "knowsAbout": [
+      "Energy-based models",
+      "Dense Associative Memory",
+      "Hopfield networks",
+      "Diffusion models",
+      "Memorization and generalization in deep learning"
+    ],
+    "sameAs": [
+      {{ site.google_scholar | jsonify }},
+      {{ site.github_link | jsonify }},
+      {{ site.twitter | jsonify }}
+    ]
+  }
+  </script>
+
   <meta name="theme-color" content="#ffffff">
   <link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css
     integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin=anonymous>

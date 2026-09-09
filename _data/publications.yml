@@ -5,22 +5,14 @@ main:
     pdf: https://arxiv.org/abs/2608.22029v1
     code: https://github.com/ndnng/ARCHER
     image: /assets/img/teaser_imgs/archer_contrast.png
-
+    
   - title: "Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data"
     authors: <strong>Bao Pham</strong>, Mohammed J. Zaki, Luca Ambrogioni, Dmitry Krotov, Matteo Negri
     page: /papers/language-diffusion-associative-memory/
     pdf: https://arxiv.org/abs/2604.26841
     code: https://github.com/Lemon-cmd/Associative-Memory-and-Language-Diffusion
     image: /assets/img/teaser_imgs/tweet_fig_1.png
-
-  - title: "Modern Methods in Associative Memory"
-    authors: Dmitry Krotov, Benjamin Hoover, Parikshit Ram, <strong>Bao Pham</strong>
-    pdf: https://arxiv.org/abs/2507.06211
-    code: https://tutorial.amemory.net/
-    talk_1: https://slideslive.com/39043831/modern-methods-in-associative-memory
-    image: /assets/img/teaser_imgs/toy_example.png
-    page: https://tutorial.amemory.net
-
+    
   - title: "Memorization to Generalization: Emergence of Diffusion Models from Associative Memory"
     authors: <strong>Bao Pham*</strong>, Gabriel Raya*, Matteo Negri, Mohammed J. Zaki, Luca Ambrogioni, Dmitry Krotov
     pdf: https://arxiv.org/abs/2505.21777
@@ -39,6 +31,15 @@ main:
     slides: https://neurips.cc/virtual/2023/poster/71901
     #talk_1: https://www.youtube.com/watch?v=5LXiQUsnHrI
     image: /assets/img/teaser_imgs/energy_transformer.png
+
+  - title: "Modern Methods in Associative Memory"
+    authors: Dmitry Krotov, Benjamin Hoover, Parikshit Ram, <strong>Bao Pham</strong>
+    pdf: https://arxiv.org/abs/2507.06211
+    code: https://tutorial.amemory.net/
+    talk_1: https://slideslive.com/39043831/modern-methods-in-associative-memory
+    image: /assets/img/teaser_imgs/toy_example.png
+    page: https://tutorial.amemory.net
+
 
   #- title: "HDR-GS: Efficient High Dynamic Range Novel View Synthesis at 1000x Speed via Gaussian Splatting"
   #  authors: Yuanhao Cai, Zihao Xiao, Yixun Liang, Minghan Qin, Yulun Zhang, Xiaokang Yang, <strong>Yaoyao Liu</strong>, Alan Yuille

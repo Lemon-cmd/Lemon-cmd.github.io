@@ -55,17 +55,17 @@ teaser_caption: "A single Energy Transformer block is applied recurrently, and e
 abstract: "Our work combines aspects of three promising paradigms in machine learning, namely, attention mechanism, energy-based models, and associative memory. Attention is the power-house driving modern deep learning successes, but it lacks clear theoretical foundations. Energy-based models allow a principled approach to discriminative and generative tasks, but the design of the energy functional is not straightforward. At the same time, Dense Associative Memory models or Modern Hopfield Networks have a well-established theoretical foundation, and allow an intuitive design of the energy function. We propose a novel architecture, called the Energy Transformer (or ET for short), that uses a sequence of attention layers that are purposely designed to minimize a specifically engineered energy function, which is responsible for representing the relationships between the tokens. In this work, we introduce the theoretical foundations of ET, explore its empirical capabilities using the image completion task, and obtain strong quantitative results on the graph anomaly detection and graph classification tasks."
 
 bibtex: |
-  @inproceedings{NEURIPS2023_57a9b974,
-  author = {Hoover, Benjamin and Liang, Yuchen and Pham, Bao and Panda, Rameswar and Strobelt, Hendrik and Chau, Duen Horng and Zaki, Mohammed and Krotov, Dmitry},
-  booktitle = {Advances in Neural Information Processing Systems},
-  doi = {10.52202/075280-1197},
-  editor = {A. Oh and T. Naumann and A. Globerson and K. Saenko and M. Hardt and S. Levine},
-  pages = {27532--27559},
-  publisher = {Curran Associates, Inc.},
-  title = {Energy Transformer},
-  url = {https://proceedings.neurips.cc/paper_files/paper/2023/file/57a9b97477b67936298489e3c1417b0a-Paper-Conference.pdf},
-  volume = {36},
-  year = {2023}
+  @inproceedings{HooverET23,
+    author = {Hoover, Benjamin and Liang, Yuchen and Pham, Bao and Panda, Rameswar and Strobelt Hendrik and Chau, Duen Horng and Zaki, Mohammed and Krotov, Dmitry},
+    booktitle = {Advances in Neural Information Processing Systems},
+    doi = {10.52202/075280-1197},
+    editor = {A. Oh and T. Naumann and A. Globerson and K. Saenko and M. Hardt and S. Levine},
+    pages = {27532--27559},
+    publisher = {Curran Associates, Inc.},
+    title = {Energy Transformer},
+    url = {https://proceedings.neurips.cc/paper_files/paper/2023/file/57a9b97477b67936298489e3c1417b0a-Paper-Conference.pdf},
+    volume = {36},
+    year = {2023}
   }
 ---
 

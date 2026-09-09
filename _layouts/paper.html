@@ -118,7 +118,7 @@
   <section class="hero teaser">
     <div class="container is-max-desktop">
       <div class="hero-body publication-teaser">
-        <img src="{{ page.teaser }}" alt="{{ page.title }}">
+        <img src="{{ page.teaser }}" alt="{{ page.title }}"{% if page.teaser_width %} style="width: {{ page.teaser_width }};"{% endif %}>
         {% if page.teaser_caption %}
         <h2 class="subtitle has-text-centered" style="margin-top: 1.25rem;">
           {{ page.teaser_caption }}

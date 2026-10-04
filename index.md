@@ -13,8 +13,7 @@ advised by [Mohammed J. Zaki](https://www.cs.rpi.edu/~zaki/) and working closely
 My work is focused on [energy-based modeling](/research/2025/12/15/ebm.html) and
 [Dense Associative Memory](https://arxiv.org/abs/1606.01164), or modern
 [Hopfield networks](https://en.wikipedia.org/wiki/Hopfield_network). I use them for two
-things: designing neural architectures, and understanding when a generative model
-memorizes its training data instead of generalizing from it. That second question runs
+things: designing neural architectures, and understanding the coexistence of memorization and generalization in diffusion models. That second question runs
 from [continuous diffusion models](https://arxiv.org/abs/2505.21777) through to
 [language diffusion models](/papers/language-diffusion-associative-memory/), and the same
 tools carry over to problems outside generative modeling, such as
@@ -25,6 +24,6 @@ Work from our group on associative memory has been covered by IBM Research
 [2](https://research.ibm.com/blog/dmitri-krotov-hopfield-networks-ai)) and
 [Quanta Magazine](https://www.quantamagazine.org/the-strange-physics-that-gave-birth-to-ai-20250430/). I also keep a [blog](/blog/) to contain some thoughts and details about my works. 
 
-Recently, I was a summer 2026 research intern at AMD.
+Recently, I was a summer 2026 research intern at AMD. Currently, I am interning at NASA for the Fall. 
 
 {% include_relative _includes/publications.md %}

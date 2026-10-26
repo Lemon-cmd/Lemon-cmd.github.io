@@ -13,10 +13,11 @@ main:
     code: https://github.com/Lemon-cmd/Associative-Memory-and-Language-Diffusion
     image: /assets/img/teaser_imgs/tweet_fig_1.png
     
-  - title: "Memorization to Generalization: Emergence of Diffusion Models from Associative Memory"
+  - title: "Emergence of Diffusion Models from Associative Memory through Memorization and Generalization"
     authors: <strong>Bao Pham*</strong>, Gabriel Raya*, Matteo Negri, Mohammed J. Zaki, Luca Ambrogioni, Dmitry Krotov
-    pdf: https://arxiv.org/abs/2505.21777
+    pdf: https://www.nature.com/articles/s41467-026-78727-y
     code: https://github.com/Lemon-cmd/Diffusion-Models-and-Associative-Memory
+    others: <a href="https://arxiv.org/abs/2505.21777" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">arXiv</a>
     slides: https://sites.google.com/view/aspen2026/talks-slides
     talk_1: https://neurips.cc/virtual/2024/107925
     talk_2: https://iclr.cc/virtual/2025/33414

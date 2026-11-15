@@ -166,6 +166,6 @@ Because every update is the gradient of an energy, the contribution of each modu
 The Associative Memory foundations that ET is built on are surveyed in
 [Modern Methods in Associative Memory](https://arxiv.org/abs/2507.06211), and the same energy-based
 perspective is applied to generative models in
-[Memorization to Generalization: Emergence of Diffusion Models from Associative Memory](https://arxiv.org/abs/2505.21777)
+[Emergence of Diffusion Models from Associative Memory through Memorization and Generalization](/papers/memorization-to-generalization/)
 and [Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data](/papers/language-diffusion-associative-memory/).
 For background, see my [blog post on energy-based modeling](/research/2025/12/15/ebm.html).

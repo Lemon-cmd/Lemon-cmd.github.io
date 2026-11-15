@@ -193,7 +193,7 @@ Token recovery tells us whether a basin exists, but measuring it requires the or
 <h2 class="title is-3" style="margin-top: 2.5rem;">Related Work</h2>
 
 This paper extends the memorization-to-generalization picture developed for continuous diffusion models in
-[Memorization to Generalization: Emergence of Diffusion Models from Associative Memory](https://arxiv.org/abs/2505.21777)
+[Emergence of Diffusion Models from Associative Memory through Memorization and Generalization](/papers/memorization-to-generalization/)
 to the discrete, token-level setting. For background on the associative memory tools used here, see
 [Modern Methods in Associative Memory](https://arxiv.org/abs/2507.06211) and my
 [blog post on energy-based modeling](/research/2025/12/15/ebm.html).

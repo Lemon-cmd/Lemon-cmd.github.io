@@ -15,6 +15,7 @@ main:
     
   - title: "Emergence of Diffusion Models from Associative Memory through Memorization and Generalization"
     authors: <strong>Bao Pham*</strong>, Gabriel Raya*, Matteo Negri, Mohammed J. Zaki, Luca Ambrogioni, Dmitry Krotov
+    page: /papers/memorization-to-generalization/
     pdf: https://www.nature.com/articles/s41467-026-78727-y
     code: https://github.com/Lemon-cmd/Diffusion-Models-and-Associative-Memory
     others: <a href="https://arxiv.org/abs/2505.21777" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">arXiv</a>

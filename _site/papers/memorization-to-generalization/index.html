@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang=" en-US">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Emergence of Diffusion Models from Associative Memory through Memorization and Generalization</title>
+
+  <meta name="description" content="Nature Communications 2026. Diffusion models viewed as Dense Associative Memories, where the spurious states that appear between memorization and generalization turn out to be the first sign of generative capability.">
+  <meta name="keywords" content="diffusion models, Dense Associative Memory, Hopfield networks, spurious states, memorization, generalization, energy landscape, Nature Communications">
+  <link rel="canonical" href="https://bhqpham.com/papers/memorization-to-generalization/" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Emergence of Diffusion Models from Associative Memory through Memorization and Generalization",
+    "name": "Emergence of Diffusion Models from Associative Memory through Memorization and Generalization",
+    "url": "https://bhqpham.com/papers/memorization-to-generalization/",
+    "description": "Nature Communications 2026. Diffusion models viewed as Dense Associative Memories, where the spurious states that appear between memorization and generalization turn out to be the first sign of generative capability.",
+    "abstract": "Dense Associative Memories (DenseAMs) are generalizations of Hopfield networks that store training data at local minima of the energy landscape. When the amount of training data exceeds the critical memory storage capacity, new local minima (different from the training data) emerge. These emergent local minima, known as spurious states, can hinder memory retrieval. We examine diffusion models (DMs) through the DenseAM lens, viewing their generative process as an attempt of a memory retrieval. In the small data regime, DMs create distinct attractors for each training sample, akin to DenseAMs below the critical capacity. As the training set size increases, DMs transition to generalization. We identify a critical intermediate phase, predicted by DenseAM theory, characterized by the emergence of spurious states. In generative modeling, these previously overlooked states are no longer negative artifacts but rather are the first signs of generative capabilities. Their existence is demonstrated across a wide range of architectures and datasets.",
+    "image": "https://bhqpham.com/assets/img/teaser_imgs/energy_teaser.png",
+    "datePublished": 2026,
+    "publication": "Nature Communications, 2026",
+    "author": [{"@type": "Person", "name": "Bao Pham"}, {"@type": "Person", "name": "Gabriel Raya"}, {"@type": "Person", "name": "Matteo Negri", "url": "https://sites.google.com/view/matteonegriphysics"}, {"@type": "Person", "name": "Mohammed J. Zaki", "url": "https://www.cs.rpi.edu/~zaki/"}, {"@type": "Person", "name": "Luca Ambrogioni", "url": "https://www.ru.nl/en/people/ambrogioni-l"}, {"@type": "Person", "name": "Dmitry Krotov", "url": "https://dmitrykrotov.com"}],
+    "sameAs": ["https://www.nature.com/articles/s41467-026-78727-y", "https://arxiv.org/abs/2505.21777", "https://github.com/Lemon-cmd/Diffusion-Models-and-Associative-Memory", "https://sites.google.com/view/aspen2026/talks-slides", "https://neurips.cc/virtual/2024/107925", "https://iclr.cc/virtual/2025/33414"],
+    "isAccessibleForFree": true
+  }
+  </script>
+
+
+  <meta property="og:title" content="Emergence of Diffusion Models from Associative Memory through Memorization and Generalization" />
+  <meta property="og:description" content="Nature Communications 2026. Diffusion models viewed as Dense Associative Memories, where the spurious states that appear between memorization and generalization turn out to be the first sign of generative capability." />
+  <meta property="og:url" content="https://bhqpham.com/papers/memorization-to-generalization/" />
+  <meta property="og:image" content="https://bhqpham.com/assets/img/teaser_imgs/energy_teaser.png" />
+
+  <meta name="twitter:title" content="Emergence of Diffusion Models from Associative Memory through Memorization and Generalization">
+  <meta name="twitter:description" content="Nature Communications 2026. Diffusion models viewed as Dense Associative Memories, where the spurious states that appear between memorization and generalization turn out to be the first sign of generative capability.">
+  <meta name="twitter:image" content="https://bhqpham.com/assets/img/teaser_imgs/energy_teaser.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129504;</text></svg>">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/project-page/css/bulma.min.css">
+  <link rel="stylesheet" href="/assets/project-page/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="/assets/project-page/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css"
+    integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/project-page/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/assets/project-page/js/bulma-carousel.min.js"></script>
+  <script src="/assets/project-page/js/bulma-slider.min.js"></script>
+  <script src="/assets/project-page/js/index.js"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    .back-home {
+      font-family: 'Google Sans', sans-serif;
+      color: #4a4a4a;
+    }
+
+    .publication-teaser img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    #BibTeX pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item back-home" href="/">&larr; Bao Pham</a>
+    </div>
+  </nav>
+
+  <!-- Title / authors / links -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h1 class="title is-1 publication-title">Emergence of Diffusion Models from Associative Memory through Memorization and Generalization</h1>
+
+            <div class="is-size-5 publication-authors">
+              
+              <span class="author-block">
+                <a href="/">Bao Pham</a><sup>*</sup>,
+              </span>
+              
+              <span class="author-block">
+                Gabriel Raya<sup>*</sup>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://sites.google.com/view/matteonegriphysics" target="_blank">Matteo Negri</a>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://www.cs.rpi.edu/~zaki/" target="_blank">Mohammed J. Zaki</a>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://www.ru.nl/en/people/ambrogioni-l" target="_blank">Luca Ambrogioni</a>,
+              </span>
+              
+              <span class="author-block">
+                <a href="https://dmitrykrotov.com" target="_blank">Dmitry Krotov</a>
+              </span>
+              
+            </div>
+
+            
+            <div class="is-size-5 publication-authors" style="margin-top: 0.75rem;">
+              <span class="author-block publication-venue">Nature Communications, 2026</span>
+              <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
+            </div>
+            
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                
+                <span class="link-block">
+                  <a href="https://www.nature.com/articles/s41467-026-78727-y" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2505.21777" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://github.com/Lemon-cmd/Diffusion-Models-and-Associative-Memory" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://sites.google.com/view/aspen2026/talks-slides" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-chalkboard-user"></i></span>
+                    <span>Slides</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://neurips.cc/virtual/2024/107925" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-video"></i></span>
+                    <span>NeurIPS 2024</span>
+                  </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="https://iclr.cc/virtual/2025/33414" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-video"></i></span>
+                    <span>ICLR 2025</span>
+                  </a>
+                </span>
+                
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- Teaser -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body publication-teaser">
+        <img src="/assets/img/teaser_imgs/energy_teaser.png" alt="Emergence of Diffusion Models from Associative Memory through Memorization and Generalization">
+        
+        <h2 class="subtitle has-text-centered" style="margin-top: 1.25rem;">
+          Generation viewed as descent on a Dense Associative Memory energy landscape. With little training data every minimum sits on a training example, and retrieval returns that example (memorization). As the training set grows, new minima appear between data points, which is the spurious phase. With more data still, the landscape flattens into broad basins whose minima are novel samples rather than stored ones (generalization).
+        </h2>
+        
+      </div>
+    </div>
+  </section>
+  <!-- End teaser -->
+  
+
+  
+  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>Dense Associative Memories (DenseAMs) are generalizations of Hopfield networks that store training data at local minima of the energy landscape. When the amount of training data exceeds the critical memory storage capacity, new local minima (different from the training data) emerge. These emergent local minima, known as spurious states, can hinder memory retrieval. We examine diffusion models (DMs) through the DenseAM lens, viewing their generative process as an attempt of a memory retrieval. In the small data regime, DMs create distinct attractors for each training sample, akin to DenseAMs below the critical capacity. As the training set size increases, DMs transition to generalization. We identify a critical intermediate phase, predicted by DenseAM theory, characterized by the emergence of spurious states. In generative modeling, these previously overlooked states are no longer negative artifacts but rather are the first signs of generative capabilities. Their existence is demonstrated across a wide range of architectures and datasets.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End abstract -->
+  
+
+  <!-- Page body -->
+  <section class="section">
+    <div class="container is-max-desktop content has-text-justified">
+      <h2 class="title is-3">Highlights</h2>
+
+<ul>
+  <li><strong>Generation as memory retrieval.</strong> A Dense Associative Memory stores training data at local minima of its energy landscape. Reading a diffusion model the same way makes its generative process an attempt at retrieval, so the geometry of the landscape, rather than the architecture, explains what the model returns.</li>
+  <li><strong>Spurious states are not a failure mode.</strong> Classical associative memory treats the minima that appear past the critical storage capacity as artifacts that corrupt retrieval. In a generative model they are the opposite: the intermediate phase they define is the first point at which the model produces something that is not a stored training example.</li>
+  <li><strong>One transition, controlled by dataset size.</strong> Below the critical capacity, each training sample gets its own attractor and the model memorizes. Above it, the spurious phase appears, and beyond that the landscape flattens into basins that correspond to generalization. The phase is predicted by DenseAM theory and observed across a wide range of architectures and datasets.</li>
+</ul>
+
+<h2 class="title is-3" style="margin-top: 2.5rem;">Related Work</h2>
+
+<p>The discrete, token-level counterpart of this picture is developed in
+<a href="/papers/language-diffusion-associative-memory/">Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data</a>.
+For the associative memory tools used here, see
+<a href="https://arxiv.org/abs/2507.06211">Modern Methods in Associative Memory</a> and
+<a href="/papers/energy-transformer/">Energy Transformer</a>, or my
+<a href="/research/2025/12/15/ebm.html">blog post on energy-based modeling</a>.</p>
+
+    </div>
+  </section>
+  <!-- End page body -->
+
+  
+  <!-- BibTeX citation -->
+  <section class="section hero is-light" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">
+        BibTeX
+        <button id="copyBibtex" class="button is-small is-dark is-pulled-right">Copy</button>
+      </h2>
+      <pre><code id="bibtexCitation">@article{pham2026emergence,
+  title={Emergence of diffusion models from associative memory through memorization and generalization},
+  author={Pham, Bao and Raya, Gabriel and Negri, Matteo and Zaki, Mohammed J. and Ambrogioni, Luca and Krotov, Dmitry},
+  journal={Nature Communications},
+  year={2026},
+  doi={10.1038/s41467-026-78727-y},
+  url={https://www.nature.com/articles/s41467-026-78727-y}
+}</code></pre>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('copyBibtex')
+      const code = document.getElementById('bibtexCitation')
+      if (btn && code) {
+        btn.addEventListener('click', () => {
+          navigator.clipboard.writeText(code.innerText.trim())
+          btn.textContent = 'Copied'
+          setTimeout(() => { btn.textContent = 'Copy' }, 1500)
+        })
+      }
+    })
+  </script>
+  <!-- End BibTeX citation -->
+  
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              You are free to borrow the source code of this website, we just ask that you link back to this page in the
+              footer. <br> This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
